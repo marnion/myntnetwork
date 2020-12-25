@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from bankroll.network/farm-retired.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 25 Dec 2020 04:49:16 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102526491-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-102526491-3');
+    </script>
+
+    <meta charset="UTF-8" />
+    <title>Bankroll - Farm - Retired</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link href="img/logo/logo-exchange-200.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Nunito&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="font/iconsmind/style02e4.css?t=1608613766399" />
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons02e4.css?t=1608613766399" />
+    <link rel="stylesheet" href="css/index02e4.css?t=1608613766399" />
+    <style>
+        .label-btn {
+            display: inline-block;
+            border: 1px solid #424242;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .label-btn:hover {
+            color: #969696;
+        }
+
+        .row-main-form {
+            margin-top: 55px;
+        }
+
+        .form-control[readonly] {
+            border: 1px solid #424242;
+            background: #232223;
+            cursor: not-allowed;
+        }
+
+        .numbers-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .number-wrap {
+            width: 160px;
+            height: 160px;
+            border: 1px solid #424242;
+            border-radius: 0.1rem;
+            margin-left: 5px;
+        }
+
+        .number-wrap:first-child {
+            margin-left: 0;
+        }
+
+        .luck-title {
+            font-family: 'Lobster', cursive;
+            font-size: 8rem !important;
+            color: whitesmoke;
+
+        }
+
+        .jackpot-title {
+            font-family: 'Raleway Dots', cursive;
+            font-size: 4rem !important;
+            line-height: normal;
+            color: white;
+
+        }
+
+        .number-wrap .digit {
+            font-size: 80px;
+            line-height: normal;
+            font-weight: 700;
+        }
+
+        .number-wrap .digit-title {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .noUi-tooltip,
+        .noUi-handle {
+            cursor: pointer;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0;
+            /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
+            /* Firefox */
+        }
+
+        #rollBtn {
+            font-size: 1.4rem;
+            line-height: 1.0;
+        }
+
+        .rolling-text {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                color: #ffffff;
+            }
+
+            100% {
+                color: #86367e;
+            }
+        }
+
+        #topStatsContainer i {
+            background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#86367e));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        #topStatsContainer i.large-icon {
+            font-size: 40px;
+            line-height: 35px;
+        }
+
+        #topStatsContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #jackpotContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #roundContainer .price-top-part>.text-large {
+            font-size: 22px !important;
+        }
+
+        #current-tickets-wrap {
+            min-width: 114px;
+        }
+    </style>
+</head>
+
+<body class="show-spinner">
+    <div class="landing-page">
+        <div class="mobile-menu">
+            <ul id="site-menu" class="navbar-nav">
+            </ul>
+        </div>
+
+        <div class="main-container">
+            <nav class="landing-page-nav">
+                <div class="container d-flex align-items-center justify-content-between">
+                    <a class="navbar-logo-text pull-left" href="index.html">
+                        <img alt="footer logo" src="img/logo/LogoWhiteText.png">
+                    </a>
+
+                    <a href="#" class="d-lg-flex mobile-menu-button">
+                        <i class="simple-icon-menu"></i>
+                    </a>
+                </div>
+            </nav>
+
+            <div class="content-container" id="home">
+                <div class="section home">
+                    <div class="container">
+                        <div class="row home-row mb-2">
+                            <div class="modal fade" id="tronWebModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">TronWeb Not Detected</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>TronWeb is required for access to Bankroll</h3>
+                                            <p>If you have TronWeb installed make sure you are logged in or have a
+                                                wallet
+                                                selected</p>
+                                            <p>For desktop we recommend Chrome / TronLink: <a
+                                                    href="https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec">Click
+                                                    here</a></p>
+                                            <p>For mobile we recommend MathWallet: <a
+                                                    href="https://mathwallet.org/">Click
+                                                    here</a></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidAmountModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Enter Amount in TRX</h3>
+                                            <p>Please enter a valid integer amount, the minimum is 10. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidAddressModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Enter a valid TRX Address</h3>
+                                            <p>Please check that TRX address again. Also can't be your own. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="invalidRefAddressModal" tabindex="-1" role="dialog"
+                                aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Invalid TRX Address Detected in Referral Link</h3>
+                                            <p>Please check that TRX address again. Thanks! </p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="txModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Transaction Complete</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>You can track your transaction below</h3>
+                                            <p>Check on Tronscan: <span class="notranslate" id="txId"></span></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="modal fade" id="txErrorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Whoops!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>TronLink Reported a Problem</h3>
+                                            <p id="txErrorId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Houston, we have a problem!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3>Check your gauges</h3>
+                                            <p id="errorId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Hey There!</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <h3 id="alertTitle">Check your gauges</h3>
+                                            <p id="alertId"></p>
+                                        </div>
+                                        <div class="modal-footer text-center">
+                                            <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- FARM DIALOGS-->
+                            <div class="modal fade" id="showFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                            <div class="modal fade" id="depositFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                            <div class="modal fade" id="unfreezeFarm" tabindex="-1" role="dialog" aria-hidden="true">
+                                <!--Added dynamically-->
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-4 mt-2">
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4 pt-4">
+                                <div class="home-text text-center row mb-4 mt-4">
+                                    <div class="col-12 text-center">
+                                        <p class="luck-title  pb-4 mb-4 text-center notranslate">Farm</p>
+                                        <a href="https://www.patreon.com/bankteller"
+                                            class="mt-3 btn btn-outline-primary text-white"><img
+                                                src="img/logo/patreon.png" width="16px" /> Become a Patron!</a>
+                                    </div>
+                                </div>
+                                <!--<h3 class="text-center text-white-50 mb-4">Daily Return <span class="notranslate" id="daily-return"></span>
+                            </h3>-->
+                                <h3 class="text-center text-white-50 mb-4" id="load-symbol">Detecting...</h3>
+                                <div id="topStatsContainer" class="row">
+
+                                    <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Coins large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Available</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-divs">...</span>
+                                            </p>
+                                            <p class="text-muted text-small">BNKRX <span id="user-divs-usdt"></span></p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Astronaut  large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Total Value</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-balance">...</span></p>
+                                            <p class="text-muted text-small">TRX <span id="user-balance-usdt"></span>
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div class="container col-6 col-xl-3 col-lg- col-md-3  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Mine large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Harvested</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-mined">...</span></p>
+                                            <p class="text-muted text-small">BNKRX</p>
+                                        </div>
+                                    </div>
+                                    <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                                        <div class="price-top-part">
+                                            <i class="iconsmind-Handshake large-icon"></i>
+                                            <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Rewards</h5>
+                                            <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                    id="user-rewards">...</span></p>
+                                            <p class="text-muted text-small">BNKRX</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p class="col-12 white mb-3 text-justify">
+                                    Bankroll Farm is a zero fee / high yield savings and income portfolio. Passively
+                                    earn
+                                    BNKR by holding popular platform and protocol assets with zero counter party risk.
+                                    Welcome to Team Bankroll.
+                                </p>
+                                <p class="col-12 white mb-3">
+                                    <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
+                                        onclick="claimAll();">CLAIM ALL</a>
+                                </p>
+
+                            </div>
+
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div id="roundContainer" class="row">
+                                            <div class="text-center col-12">
+                                                <h3>BNKRX Stats</h3>
+                                                <!--<h3>Daily &#8776; <span class="notranslate" id="user-estimate"></span>
+                                                <small>*</small>
+                                            </h3>-->
+                                            </div>
+                                            <div class="container col-6  text-center">
+                                                <div class="price-top-part">
+                                                    <i class="iconsmind-Coins-3 large-icon"></i>
+                                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Price</h5>
+                                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                            id="price">... </span></p>
+                                                    <p class="text-muted text-small">TRX/BNKRX <span
+                                                            id="price-usdt"></span></p>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="container col-6   text-center">
+                                                <div class="price-top-part">
+                                                    <i class="iconsmind-Bar-Chart large-icon"></i>
+                                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Total Farm
+                                                        Yield</h5>
+                                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                            id="yield">...</span>
+                                                    </p>
+                                                    <p class="text-muted text-small">APY</p>
+                                                </div>
+                                            </div>
+                                            <div class="container col-6   text-center">
+                                                <div class="price-top-part">
+                                                    <i class="iconsmind-Line-Chart2 large-icon"></i>
+                                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Base Yield
+                                                    </h5>
+                                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                            id="difficulty">... </span></p>
+                                                    <p class="text-muted text-small">APY / Stage <span
+                                                            id="stage"></span></p>
+                                                </div>
+                                            </div>
+
+                                            <div class="container col-6  text-center">
+                                                <div class="price-top-part">
+                                                    <i class="iconsmind-Mine large-icon"></i>
+                                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Total
+                                                        Harvested</h5>
+                                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                            id="total-mined">... </span> </span></p>
+                                                    <p class="text-muted text-small">BNKRX <span
+                                                            id="total-mined-usdt"></span></p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
+                                            href="swap.html">GET THE BEST BNKR PRICE ON SWAP</a>
+                                        <!--<div class="text-center">
+                                        <h3>Round  <span class="notranslate" id="time-left"></span></h3>
+                                    </div>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row mb-4 mt-4">
+                            <div class="col-12 col-xl-6 col-lg-6 col-md-6 text-left">
+                                <p class="white">Network: <span class="notranslate" id="network">Detecting...</span>
+
+                                </p>
+                            </div>
+                            <div class="col-12 col-xl-6 col-lg-6 text-xl-right text-lg-right text-md-right">
+                                <p class="white">Wallet: <span class="notranslate"
+                                        id="walletAddress">Loading...</span>&nbsp;&nbsp;&nbsp;
+                                    Balance: <span class="notranslate" id="walletBalanceValue">...</span> <span
+                                        class="text-muted">TRX</span> <span class="notranslate"
+                                        id="walletBalanceValue-bnkr">...</span> <span class="text-muted">BNKR</span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row pt-4 mt-4">
+                            <div class="container col-12 text-center">
+                                <h1 class="text-white-50">Farms</h1>
+                                <p>
+                                    Pair BNKR with your favorite coins on TRON to farm BNKR with zero impermanent loss.
+                                    Withdraw principal risk free at any time.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row pt-4 mt-4 pb-4 mb-4" id="farm-cards">
+                            <!--Dynamically added cards-->
+                        </div>
+
+                        <div class="row pt-4 mt-4">
+                            <div class="container col-12 text-center">
+                                <h1 class="text-white-50">Retired Farms</h1>
+                                <p>
+                                    Remove funds from these retired farms before the UI becomes unavailable
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row pt-4 mt-4 pb-4 mb-4" id="farm-retired">
+                            <!--Dynamically added cards-->
+                        </div>
+
+
+                        <div class="row mb-4 mt-2">
+
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4">
+                                <h2 class="text-white-50">Get a Buddy</h2>
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3>Buddy Referral System</h3>
+
+                                        <form>
+                                            <div class="form-group">
+                                                <label for="recipient">Current Buddy</label>
+                                                <h3 id="current-buddy" class="text-white-50">...</h3>
+
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="recipient">Buddy</label>
+                                                <input class="form-control" id="recipient"
+                                                    aria-describedby="transTrxHelp" placeholder="Address">
+
+                                            </div>
+                                            <p class="text-left">
+                                                <a class="btn btn-outline-semi-light default mb-0" id="transTrx"
+                                                    onclick="updateBuddy();">UPDATE</a>
+                                            </p>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="container col-12 col-xl-6 col-lg-6 col-md-6">
+                                <h2 class="text-white-50">About</h2>
+                                <p class="text-white">Bankroll Farm offers lossless saver pools to yield farm BNKR.
+                                    Deposit your equal parts of your supported TRC20 tokens and BNKR to earn risk free.
+                                    Farm has ZERO FEES, is powered 100% through participation, and you can withdraw at
+                                    any time. Interest is earned by mining BNKR over time. Each mined BNKR is co-mined
+                                    1:1 with Stronghold to incentivize locked liquidity. In addition, a generous 10%
+                                    commission is paid on referrals during the claims process.
+                                    A minimum of 50 BNKR deposited (per pool) is required for referral rewards. Spread
+                                    the word and lets grow Bankroll!</p>
+                                <p class="white">Tutorial - <a class="notranslate" target="_blank"
+                                        href="https://youtu.be/JFX6cW0VZCo"
+                                        class="mr-4">https://youtu.be/JFX6cW0VZCo</a></p>
+                                <p class="white">Audits - <a target="_blank"
+                                        href="https://solidity.finance/audits/Bankroll/">https://solidity.finance/audits/Bankroll</a>
+                                </p>
+                                <p id="referral"></p>
+                            </div>
+                        </div>
+
+                        <div class="row pt-4 mt-4">
+                            <div class="container col-12 text-center">
+                                <h1 class="text-white-50">Stats</h1>
+                                <p>
+                                    Farmers from far and wide have come to Bankroll to harvest yield!!! Here are the
+                                    numbers...
+                                </p>
+                            </div>
+                            <div class="container col-12 col-xl-4 col-lg-4 col-md-4 text-center">
+                                <div class="price-top-part">
+                                    <i class="iconsmind-Farmer large-icon"></i>
+                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Farmers</h5>
+                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                            id="getTotalMembers">...</span></p>
+                                    <p class="text-muted text-small">User Impressions</p>
+                                </div>
+                            </div>
+
+                            <div class="container col-12 col-xl-4 col-lg-4 col-md-4 text-center">
+                                <div class="price-top-part">
+                                    <i class="iconsmind-Bank large-icon"></i>
+                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Farm TVL</h5>
+                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                            id="contractBalance">...</span></p>
+                                    <p class="text-muted text-small">TRX <span id="contractBalance-usdt"></span></p>
+                                </div>
+                            </div>
+
+                            <div class="container col-xl-4 col-lg-4 col-md-4 text-center">
+                                <div class="price-top-part">
+                                    <i class="iconsmind-Sync large-icon"></i>
+                                    <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Transactions</h5>
+                                    <p class="text-large mb-2 text-white"><span class="notranslate"
+                                            id="totalTxs">...</span></p>
+                                    <p class="text-muted text-small">Txs</p>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="section footer mb-0">
+                        <div class="container">
+                            <div class="row footer-row">
+                                <div class="col-12 text-right">
+                                    <a class="btn btn-circle btn-outline-semi-light footer-circle-button scrollTo"
+                                        href="#home" id="footerCircleButton"><i class="simple-icon-arrow-up"></i></a>
+                                </div>
+                                <div class="col-12 text-center footer-content">
+                                    <a href="#home" class="scrollTo">
+                                        <img class="footer-logo" alt="footer logo" src="img/logo/LogoWhite.png" />
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="row" id="footerMenuAccordion">
+
+                            </div>
+                        </div>
+                        <div class="separator mt-5"></div>
+                        <div class="container copyright pt-5 pb-5">
+                            <div class="row">
+                                <div class="col-12 mb-4">This application is beta software and is highly experimental.
+                                    To the greatest extent possible the Bankroll protocol has been implemented to be
+                                    accessible directly on-chain without a user interface. This website and associated
+                                    APIs have been provided for convenience.<br><br>
+                                    Ultimately you are interacting with no other party other than the blockchain itself
+                                    and are 100% responsible for your transactions. Please do your own research before
+                                    interacting with any contract or asset on the blockchain. The Bankroll Network is a
+                                    decentralized autonomous organization and is never liable for losses that happen
+                                    using this user interface or the Bankroll protocol.
+                                </div>
+                                <div class="col-6">
+                                    <p class="mb-0">2020 © Bankroll</p>
+                                </div>
+                                <div class="col-6 text-right social-icons">
+                                    <p><a href="https://t.me/bankrollnetwork" class="footer-link"><img
+                                                class="footer-telegram" src="img/telegram-logo.svg" /> Join us on
+                                            Telegram</a>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        let isRetired = true;
+    </script>
+    <script src="js/index02e4.js?t=1608613766399"></script>
+    <script src="js/farm.bundle02e4.js?t=1608613766399"></script>
+    <script type="text/javascript"
+        src="../translate.google.com/translate_a/elementa0d8.html?cb=googleTranslateElementInit"></script>
+</body>
+
+
+<!-- Mirrored from bankroll.network/farm-retired.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 25 Dec 2020 04:49:18 GMT -->
+</html>
