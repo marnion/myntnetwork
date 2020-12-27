@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<!-- Mirrored from bankroll.network/bnkrx.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 25 Dec 2020 04:49:01 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-102526491-3"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-102526491-3');
+    </script>
+
+    <meta charset="UTF-8"/>
+    <title>Bankroll - BNKR X</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link href="img/logo/logo-exchange-x-256.png" rel="icon">
+    <link href="https://fonts.googleapis.com/css?family=Lobster|Nunito&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="font/iconsmind/style175e.css?t=1608613766323"/>
+    <link rel="stylesheet" href="font/simple-line-icons/css/simple-line-icons175e.css?t=1608613766323"/>
+    <link rel="stylesheet" href="css/index175e.css?t=1608613766323"/>
+    <style>
+        .label-btn {
+            display: inline-block;
+            border: 1px solid #424242;
+            width: 28px;
+            height: 20px;
+            cursor: pointer;
+            font-size: 12px;
+            line-height: 20px;
+        }
+
+        .label-btn:hover {
+            color: #969696;
+        }
+
+        .row-main-form {
+            margin-top: 55px;
+        }
+
+        .form-control[readonly] {
+            border: 1px solid #424242;
+            background: #232223;
+            cursor: not-allowed;
+        }
+
+        .numbers-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+
+        .number-wrap {
+            width: 160px;
+            height: 160px;
+            border: 1px solid #424242;
+            border-radius: 0.1rem;
+            margin-left: 5px;
+        }
+
+        .number-wrap:first-child {
+            margin-left: 0;
+        }
+
+        .luck-title {
+            font-family: 'Lobster', cursive;
+            font-size: 8rem !important;
+            color: whitesmoke;
+
+        }
+
+        .jackpot-title {
+            font-family: 'Raleway Dots', cursive;
+            font-size: 4rem !important;
+            line-height: normal;
+            color: white;
+
+        }
+
+        .number-wrap .digit {
+            font-size: 80px;
+            line-height: normal;
+            font-weight: 700;
+        }
+
+        .number-wrap .digit-title {
+            font-size: 20px;
+            margin-top: 10px;
+        }
+
+        .noUi-tooltip,
+        .noUi-handle {
+            cursor: pointer;
+        }
+
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield; /* Firefox */
+        }
+
+        #rollBtn {
+            font-size: 1.4rem;
+            line-height: 1.0;
+        }
+
+        .rolling-text {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                color: #ffffff;
+            }
+            100% {
+                color: #86367e;
+            }
+        }
+
+        .topStatsContainer i {
+            background: -webkit-gradient(linear, left top, left bottom, from(#ffffff), to(#86367e));
+            -webkit-background-clip: text;
+            background-clip: text;
+        }
+
+        .topStatsContainer i.large-icon {
+            font-size: 40px;
+            line-height: 35px;
+        }
+
+        .topStatsContainer .price-top-part > .text-large {
+            font-size: 22px !important;
+        }
+
+        #jackpotContainer .price-top-part > .text-large {
+            font-size: 22px !important;
+        }
+
+        #roundContainer .price-top-part > .text-large {
+            font-size: 22px !important;
+        }
+
+        #current-tickets-wrap {
+            min-width: 114px;
+        }
+
+    </style>
+</head>
+
+<body class="show-spinner">
+<div class="landing-page">
+    <div class="mobile-menu">
+
+        <ul id="site-menu" class="navbar-nav">
+        </ul>
+    </div>
+
+    <div class="main-container">
+        <nav class="landing-page-nav">
+            <div class="container d-flex align-items-center justify-content-between">
+                <a class="navbar-logo-text pull-left" href="index.html">
+                    <img alt="footer logo" src="img/logo/LogoWhiteText.png">
+                </a>
+                <a href="#" class="d-lg-flex mobile-menu-button">
+                    <i class="simple-icon-menu"></i>
+                </a>
+            </div>
+        </nav>
+
+        <div class="content-container" id="home">
+            <div class="section home">
+                <div class="container">
+                    <div class="row home-row mb-2">
+                        <div class="modal fade" id="tronWebModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">TronWeb Not Detected</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>TronWeb is required for access to Bankroll</h3>
+                                        <p>If you have TronWeb installed make sure you are logged in or have a wallet
+                                            selected</p>
+                                        <p>For desktop we recommend Chrome / TronLink: <a
+                                                href="https://chrome.google.com/webstore/detail/tronlink/ibnejdfjmmkpcnlpebklmnkoeoihofec">Click
+                                            here</a></p>
+                                        <p>For mobile we recommend MathWallet: <a href="https://mathwallet.org/">Click
+                                            here</a></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="autoRollIntModal" tabindex="-1" role="dialog" data-backdrop="static"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Auto Buy FTW!!!</h5>
+                                        <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>-->
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- <h3>Select Auto Roll Interval in Seconds</h3> -->
+                                        <h3>How often do you want to buy?</h3>
+                                        <div class="slider mt-5 mb-5" id="dailySlider"></div>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                onclick="updateAutorollInterval();" data-dismiss="modal">SAVE
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="invalidAddressModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Whoops!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>Enter a valid TRX Address</h3>
+                                        <p>Please check that TRX address again. Thanks! </p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="invalidRefAddressModal" tabindex="-1" role="dialog"
+                             aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Whoops!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>Invalid TRX Address Detected in Referral Link</h3>
+                                        <p>Please check that TRX address again. Thanks! </p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="txModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Transaction Complete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>You can track your transaction below</h3>
+                                        <p>Check on Tronscan: <span class="notranslate" id="txId"></span></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="autotxModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Auto Buy Complete</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>You can track your transaction below</h3>
+                                        <p>Check on Tronscan: <span class="notranslate" id="autotxId"></span></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="txModalLuck" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Transaction not found</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>You can track your transaction below</h3>
+                                        <p>Check on Tronscan: <span class="notranslate" id="txIdLuck"></span></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="txErrorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Whoops!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>TronLink Reported a Problem</h3>
+                                        <p id="txErrorId"></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="errorModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Houston, we have a problem!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3>Check your gauges</h3>
+                                        <p id="errorId"></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal fade" id="alertModal" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title">Hey There!</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h3 id="alertTitle">Check your gauges</h3>
+                                        <p id="alertId"></p>
+                                    </div>
+                                    <div class="modal-footer text-center">
+                                        <button type="button" class="btn btn-outline-semi-light default"
+                                                data-dismiss="modal">Close
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="row mb-4 mt-2">
+                        <div class="container col-12 col-xl-6 col-lg-6 col-md-6 mb-4 pt-4">
+                            <div class="home-text text-center row mb-4 mt-4">
+                                <div class="col-12 text-center">
+                                    <p class="luck-title  pb-4 mb-4 text-center notranslate">Bnkrx</p>
+                                    <a href="https://www.patreon.com/bankteller" class="btn btn-outline-primary text-white"><img src="img/logo/patreon.png" width="16px"/> Become a Patron!</a>
+                                </div>
+                            </div>
+                            
+                            <h3 class="text-center text-white-50 mb-4">Bankroll's elastic reward token</h3>
+                            
+                   
+                            <p class="col-12 white text-center">
+
+                                <a class="btn btn-outline-semi-light btn-block default"
+                                    href="swapx.html">TRADE</a>
+                                    <a class="btn btn-outline-semi-light btn-block default" href="farm.html">YIELD FARM</a>
+                                    <a class="btn btn-outline-semi-light btn-block default"
+                                    href="stockpile.html">LIQUIDITY FARM</a>
+                                    <a class="btn btn-outline-semi-light btn-block default"
+                                    href="https://tronscan.io/#/token20/TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C">TRACKER</a>
+                                <!--<a class="btn btn-outline-semi-light btn-block default"
+                                    href="https://www.coingecko.com/en/coins/bankroll-network">CHART <span
+                                        class="pr-2 pl-2"> + </span> ANALYZE</a>-->
+                            </p>
+                        </div>
+                        <div class="container col-12 col-xl-6 col-lg-6 col-md-6 text-center">
+                            <img src="img/logo/logo-exchange-x-512.png" class="img-fluid p-4" />
+                            <p class="text-white text-center">Token Address: TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C</p>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-4 mt-4">
+                        <div class="col-12 col-xl-6 col-lg-6 col-md-6 text-left">
+                            <p class="white">Network: <span class="notranslate" id="network">Detecting...</span>
+                                <!--&nbsp;&nbsp;&nbsp;Bandwidth: <span class="notranslate" id="getBandwidth">0</span> &nbsp;&nbsp;
+                                Energy: <span
+                                        id="getEnergy">0</span>-->
+                            </p>
+                        </div>
+                        <div class="col-12 col-xl-6 col-lg-6 text-xl-right text-lg-right text-md-right">
+                            <p class="white">Wallet: <span class="notranslate" id="walletAddress">Loading...</span>&nbsp;&nbsp;&nbsp;
+                                Balance: <span class="notranslate" id="walletBalanceValue">0.0</span> BNKRX
+                            </p>
+                        </div>
+                    </div>
+
+
+                    <div class="row mb-4 mt-2">
+                        <div class="container col-12 col-xl-8 col-lg-8 col-md-8">
+                            <h2 class="text-white-50">About</h2>
+                            <p class="text-white">The BNKR Extended Token captures the network value of the Bankroll DeFi Network and allows everyone in the TRON community to participate passively. BNKRX is scarce, can be staked, has progressive mining difficulty and elastic inflation which scales to the savings rate of the community.
+                            </p>
+                            <p class="white">BNKRX is harvested via Bankroll Farm. How much BNKRX you receive is based on the current mining difficulty. It's liquidity grows in proportion to its inflation rate and is locked.</p>
+                        </div>
+                    </div>
+
+                    <div class="row pt-4 mt-4">
+                        <div class="container col-12 text-center">
+                            <h1 class="text-white-50">Stats</h1>
+                            <p>
+                                BNKRX captures the entire value of the Bankroll Network and makes it available to the entire TRX Community!!! Here are the numbers...
+                            </p>
+                        </div>
+                        <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-MaleFemale large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Holders</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                                            id="players">0.0</span>
+                                </p>
+                                <p class="text-muted text-small">Count</p>
+                            </div>
+                        </div>
+
+                        <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-Line-Chart2 large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Max Daily Return</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                                            id="difficulty">0.0 </span></p>
+                                <p class="text-muted text-small">Percentage / Stage <span id="stage"></span></p>
+                            </div>
+                        </div>
+
+                        <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-Mine large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Total Mined</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                                            id="total-mined">0.0 </span></p>
+                                <p class="text-muted text-small">BNKRX <span id="total-mined-usdt"></span></p>
+                            </div>
+                        </div>
+                        
+                        <div class="container col-6 col-xl-3 col-lg-3 col-md-3  text-center">
+                            <div class="price-top-part">
+                                <i class="iconsmind-Sync large-icon"></i>
+                                <h5 class="mb-0 font-weight-semibold color-theme-1 mb-2">Transactions</h5>
+                                <p class="text-large mb-2 text-white"><span class="notranslate"
+                                                                            id="totalTxs">0.0</span>
+                                </p>
+                                <p class="text-muted text-small">Count</p>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row mb-4 mt-4">
+                        <div class="col-12 mb-4">
+                            <div class="card ">
+                                <div class="card-header">
+                                    <ul class="nav nav-tabs card-header-tabs " role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="first-tab" data-toggle="tab"
+                                               href="#activityContent"
+                                               role="tab" aria-controls="activityContent"
+                                               aria-selected="true">Activity</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="card-body">
+                                    <div id="tabContainerDaily" class="tab-content">
+                                        <div class="tab-pane fade show active" id="activityContent" role="tabpanel"
+                                             aria-labelledby="first-tab">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <div class="section footer mb-0">
+                    <div class="container">
+                        <div class="row footer-row">
+                            <div class="col-12 text-right">
+                                <a class="btn btn-circle btn-outline-semi-light footer-circle-button scrollTo"
+                                   href="#home"
+                                   id="footerCircleButton"><i
+                                        class="simple-icon-arrow-up"></i></a>
+                            </div>
+                            <div class="col-12 text-center footer-content">
+                                <a href="#home" class="scrollTo">
+                                    <img class="footer-logo" alt="footer logo" src="img/logo/LogoWhite.png"/>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="row" id="footerMenuAccordion">
+
+                        </div>
+                    </div>
+                    <div class="separator mt-5"></div>
+                    <div class="container copyright pt-5 pb-5">
+                        <div class="row">
+                            <div class="col-12 mb-4">This application is beta software and is highly experimental.  To the greatest extent possible the Bankroll protocol has been implemented to be accessible directly on-chain without a user interface.  This website and associated APIs have been provided for convenience.<br><br>  
+Ultimately you are interacting with no other party other than the blockchain itself and are 100% responsible for your transactions. Please do your own research before interacting with any contract or asset on the blockchain.  The Bankroll Network is a decentralized autonomous organization and is never liable for losses that happen using this user interface or the Bankroll protocol. 
+                            </div>
+                            <div class="col-6">
+                                <p class="mb-0">2020 © Bankroll</p>
+                            </div>
+                            <div class="col-6 text-right social-icons">
+                                <p><a href="https://t.me/bankrollnetwork" class="footer-link"><img
+                                        class="footer-telegram" src="img/telegram-logo.svg"/> Join us on Telegram</a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/index175e.js?t=1608613766323"></script>
+<script src="js/bnkrx.bundle175e.js?t=1608613766323"></script>
+<script type="text/javascript"
+        src="../translate.google.com/translate_a/elementa0d8.html?cb=googleTranslateElementInit"></script>
+</body>
+
+
+<!-- Mirrored from bankroll.network/bnkrx.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 25 Dec 2020 04:49:02 GMT -->
+</html>
