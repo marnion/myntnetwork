@@ -68,7 +68,7 @@ async function main() {
 
         swapContract = await tronWeb.contract().at(contractAddress)
         //fastContract = await tronWeb.contract().at(fastAddress)
-        //mynt = await tronWeb.contract().at(myntAddress)
+        mynt = await tronWeb.contract().at(myntAddress)
 
         console.log('found tronweb')
         currentAddress = tronWeb.defaultAddress['base58']
