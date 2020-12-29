@@ -69305,7 +69305,7 @@ async function getPrices() {
     while (!complete && retries < 5) {
         try {
             retries++
-            bnkr = (bnkr) ? bnkr : await getBNKRPrice()
+            //bnkr = (bnkr) ? bnkr : await getBNKRPrice()
             bnkrx = (bnkrx) ? bnkrx : await getBNKRXPrice()
             btt = (btt) ? btt : await getBTTPrice()
             usdt = (usdt) ? usdt : await getUSDTPrice()
