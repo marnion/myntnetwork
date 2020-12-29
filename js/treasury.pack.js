@@ -67,10 +67,10 @@ async function main() {
         prices = await getPrices()
 
 
-        bnkr = await tronWeb.contract().at(tokenAddress)
+        //bnkr = await tronWeb.contract().at(tokenAddress)
         credits = await tronWeb.contract().at(contractAddress)
         bnkrMint = await tronWeb.contract().at(mintAddress)
-        fastContract = await tronWeb.contract().at(fastAddress)
+        //fastContract = await tronWeb.contract().at(fastAddress)
         swap = await tronWeb.contract().at(swapAddress)
 
         console.log('found tronweb')

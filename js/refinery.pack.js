@@ -7378,7 +7378,7 @@ async function main() {
 
 
         flow = await tronWeb.contract().at(contractAddress)
-        fastContract = await tronWeb.contract().at(fastAddress)
+        //fastContract = await tronWeb.contract().at(fastAddress)
         buddy = await tronWeb.contract().at(buddyAddress)
         bnkrx = await tronWeb.contract().at(bnkrxAddress)
         airdrop = await tronWeb.contract().at(airdropAddress)
