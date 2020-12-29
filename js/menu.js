@@ -1,11 +1,9 @@
 var menu_system = ` 
-    <li class="nav-item"><a href="index.html" class="notranslate">Home</a><span style="border-right: 1px solid #FFFFFF;">&nbsp;&nbsp;</span>&nbsp;&nbsp;<a href="https://t.me/bankrollnetwork">Telegram</a></li>
+    <li class="nav-item"><a href="index.html" class="notranslate">Home</a><span style="border-right: 1px solid #FFFFFF;">&nbsp;&nbsp;</span>&nbsp;&nbsp;<a href="https://t.me/myntnetwork">Telegram</a></li>
     <li class="nav-item"></li>
     <li class="nav-item"><a href="refinery.html" class="notranslate">Refinery</a></li>
     <li class="nav-item"><a href="treasury.html" class="notranslate">Treasury</a></li>
     <li class="nav-item"><a href="forge.html" class="notranslate">Forge</a></li>
-
-    <li class="nav-item"><a href="resources.html">HELP</a></li>
 
 `
 

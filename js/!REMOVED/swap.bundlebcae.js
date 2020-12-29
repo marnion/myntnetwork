@@ -1,8 +1,8 @@
 //410000000000000000000000000000000000000000
-const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb' //'TS3CJptewhm9NM4gRLqPt2acxaD4gaER3K'
+const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb'
 
-const networks = { //TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
-    'mainnet': 'TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7',
+const networks = {
+    'mainnet': 'TRXYvAoYvCqmvZWpFCTLc4rdQ7KxbLsUSj',
     'shasta': 'TNKK3sLSBikAwVVwnCr16LGZ4kw9dZcqVP'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
 
@@ -18,9 +18,7 @@ GameHub - TNpvL6PddcnE1kPc8a7LcqNuYaocyMecux
 const feeLimit = 150e6
 
 const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
-// const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar' // test
-
-const bnkrAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C'
+const bnkrAddress = 'TNo59Khpq46FGf4sD7XSWYFNfYfbc8CqNK'
 
 let fastContract
 
@@ -53,7 +51,7 @@ async function main() {
             return
         }
         console.warn('main retries', 'Could not connect to TronLink.', waiting)
-        setTimeout(main, 500);
+        setTimeout(main, 100);
         return;
     } else {
 
@@ -82,6 +80,7 @@ async function main() {
         //First UI render
         try {
             await mainLoop()
+            await showStats()
         } catch (e) {
 
         } finally {
@@ -94,16 +93,21 @@ async function main() {
         // Schedule loops
         setInterval(mainLoop, 5000)
         setInterval(watchSelectedWallet, 2000)
-        setInterval(showPrice,1000 * 15 )
 
 
         loadTabsData()
+
+        //initChart()
+        //loadChartData()
+
+
+        await pullData()
     }
 
 }
 
 async function getFastVolume() {
-    const response = await axios.get('https://bnkr-info.bankroll.network/volume/x/sun')
+    const response = await axios.get('https://bnkr-info.bankroll.network/volume/sun')
     volumeLoaded = true
     return parseInt(response.data)
 }
@@ -134,7 +138,7 @@ function bindUI() {
         amount = (await swapContract.getTrxToTokenInputPrice(amount).call()).toNumber()
 
         console.log('buy-amount-estimate', amount)
-        buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} BNKRX`)
+        buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} BNKR`)
     }
 
     let calcTRX = async (e) => {
@@ -156,7 +160,7 @@ function bindUI() {
 
 
             console.log('add-amount-estimate', amount, bnkrAmount)
-            addEstimate.text(`${formatSun(amount)} SWAP ; ${formatSun(bnkrAmount)} BNKRX required`)
+            addEstimate.text(`${formatSun(amount)} SWAP ; ${formatSun(bnkrAmount)} BNKR required`)
         }
     }
 
@@ -219,7 +223,6 @@ function watchSelectedWallet() {
 async function mainLoop() {
     await showWalletInfo()
     await showUserStats()
-    await showStats()
 }
 
 function updateReferrer() {
@@ -300,27 +303,6 @@ async function showWalletInfo() {
     }
 }
 
-async function showPrice(){
-    try {
-
-        let price
-        let complete = false
-        let retries = 0
-
-        while (!complete && retries < 5) {
-            try {
-                retries++
-                price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
-                complete = true
-            } catch (e) {
-                console.warn('showstats fail', e.toString())
-            }
-        }
-
-        $('.buy-price').text(formatSun(price.toNumber()))
-    } catch (e) { }
-}
-
 async function showStats() {
     try {
 
@@ -331,11 +313,11 @@ async function showStats() {
         while (!complete && retries < 5) {
             try {
                 retries++
-                totalTxs = (totalTxs) ? totalTxs : await swapContract.totalTxs().call()
-                    players = (players) ? players : await swapContract.providers().call()
-                    tronBalance = (tronBalance) ? tronBalance : await swapContract.tronBalance().call()
-                    totalBNKR = (totalBNKR) ? totalBNKR : await swapContract.tokenBalance().call()
-                    price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
+                totalTxs = (totalTxs) ? totalTxs : await swapContract.totalTxs().call(),
+                    players = (players) ? players : await swapContract.providers().call(),
+                    tronBalance = (tronBalance) ? tronBalance : await swapContract.tronBalance().call(),
+                    totalBNKR = (totalBNKR) ? totalBNKR : await swapContract.tokenBalance().call(),
+                    price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call(),
                     supply = (supply) ? supply : await swapContract.totalSupply().call()
                 complete = true
             } catch (e) {
@@ -351,15 +333,15 @@ async function showStats() {
             $('#earnings-usdt').html(`${approxStr} ${formatSun(trxVolume * 0.003 * prices.usdt)} USDT`)
         }
         $('#liquidity').text(formatSun(supply.toNumber()))
-        $('#liquidity-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt + totalBNKR.toNumber() * prices.bnkrx)} USDT`)
+        $('#liquidity-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt + totalBNKR.toNumber() * prices.bnkr)} USDT`)
         $('#totalTxs').text(numeral(totalTxs.toNumber()).format('0,0.000 a').toUpperCase())
         $('#providers').text(players.toNumber())
         $('#contractBalance').text(formatSun(tronBalance))
         $('#contractBalance-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt)} USDT`)
         $('.buy-price').text(formatSun(price.toNumber()))
-        $('#price-usdt').html(`${approxStr} ${formatSun(price.toNumber() * prices.usdt)} USDT`)
+        $('.price-usdt').html(`${approxStr} ${formatSun(price.toNumber() * prices.usdt)} USDT`)
         $('#totalSupply').text(formatSun(totalBNKR.toNumber()))
-        $('#totalSupply-usdt').html(`${approxStr} ${formatSun(totalBNKR.toNumber() * prices.bnkrx)} USDT`)
+        $('#totalSupply-usdt').html(`${approxStr} ${formatSun(totalBNKR.toNumber() * prices.bnkr)} USDT`)
     } catch (e) { }
 }
 
@@ -398,7 +380,7 @@ async function showUserStats() {
     $('#user-txs').text(numeral(userTXs).format('0,0.000 a').toUpperCase())
     $('.user-balance-bnkr').text(formatSun(userBNKR))
     $('.user-balance-trx').text(formatSun(userTRX))
-    $('.user-balance-bnkr-usdt').html(`${approxStr} ${formatSun(userBNKR * prices.bnkrx)} USDT`)
+    $('.user-balance-bnkr-usdt').html(`${approxStr} ${formatSun(userBNKR * prices.bnkr)} USDT`)
     $('.user-balance-trx-usdt').html(`${approxStr} ${formatSun(userTRX * prices.usdt)} USDT`)
     $('.user-balance-swap').text(formatSun(userSwap))
     if (userSwap > 0) {
@@ -409,7 +391,7 @@ async function showUserStats() {
         amount = (await swapContract.getLiquidityToReserveInputPrice(userSwap).call())
         console.log('sell-amount-estimate', amount)
         let trx_value = amount[0].toNumber()
-        $('#user-balance-estimate').html(`<h5 class="color-theme-1 mr-2">Staked Value</h5> <h5><span class="text-white">${formatSun(trx_value)}</span> TRX + ` + `<span class="text-white">${formatSun(amount[1].toNumber())}</span> BNKRX = <span class="text-success">${formatSun(trx_value * 2)}</span> TRX</h5>`)
+        $('#user-balance-estimate').html(`<h5 class="color-theme-1 mr-2">Staked Value</h5> <h5><span class="text-white">${formatSun(trx_value)}</span> TRX + ` + `<span class="text-white">${formatSun(amount[1].toNumber())}</span> BNKR = <span class="text-success">${formatSun(trx_value * 2)}</span> TRX</h5>`)
         $('#user-balance-estimate-usdt').html(`${approxStr} ${formatSun(trx_value * 2 * prices.usdt)} USDT`)
     } else {
         $("#user-estimate").html('Add TRX and BNKR liquidity to earn 0.3%')
@@ -469,6 +451,7 @@ function shortId(str, size) {
 }
 
 /************ Chain Functions *******************/
+
 
 
 async function sell() {
@@ -656,11 +639,135 @@ async function transfer() {
 
 
 
+async function pullData() {
+    let pages = 0
+    let repeats = 0
+    let lastMin = 0
+    let startTime = Math.floor(Date.now() / 1000) - (86400 * 30) //48 hours in the past
+    let supply = (await swapContract.totalSupply().call()).toNumber()
+    let fingerprint = await loadData(null, startTime, supply)
+    let breaker = { rank: 0, min: 0 }
+    while (fingerprint && (breaker.rank < 150 ? true : repeats < 40)) {
+        fingerprint = await loadData(fingerprint, startTime, supply)
+        breaker = await updateTopPlayers()
+        if (breaker.min == lastMin) {
+            repeats++
+        } else {
+            repeats = 0
+            lastMin = breaker.min
+        }
+        pages++
+        $("#loading").text(`Loading... ${pages}`)
+    }
+    updateTopPlayers()
+    $("#loading").text('')
+}
+
+async function loadData(fingerprint = null, startTime, supply) {
+    let requestObj = { size: 200, eventName: 'onLiquidity' }
+
+    if (fingerprint != null) {
+        requestObj.previousLastEventFingerprint = fingerprint
+    }
+
+    let res
+    let lastTime = 0
+
+    try {
+        res = await tronstack().getEventResult(contractAddress, requestObj)
+
+        if (res.length) {
+            fingerprint = res[res.length - 1].fingerprint
+            _.forEach(res, async value => {
+                let account
+                let player = tronWeb.address.fromHex(value.result.provider)
+
+                let timestamp = Math.floor(value.timestamp / 1000)
+                lastTime = timestamp
 
 
+                if (players[player] == null) {
+                    account = { player: player }
+                    account.tronBalance = parseInt(value.result.amount)
+                    account.earnings = (account.tronBalance / supply) * 0.003 * trxVolume
+                    players[player] = account
+                }
+            })
 
+            return lastTime > startTime ? fingerprint : null
+        }
 
+    } catch (e) {
+    }
 
+    return null;
+
+}
+
+const updateTopPlayers = async () => {
+
+    let playerRes = _.values(players)
+
+    playerRes = _.orderBy(playerRes, ['tronBalance'], ['desc'])
+
+    let rank = 1
+    let minimum
+    let playersList = _.map(playerRes, (obj) => {
+        obj.rank = rank++
+        return obj
+    })
+
+    playersList = _.slice(playersList, 0, 100)
+
+    if (playersList.length == 100) {
+        minimum = _.last(playersList).tronBalance
+    }
+
+    //  const tronscanPrefix = networkName === 'shasta' ? 'shasta.' : ''
+
+    const investTemplateHtml = `
+  <div class="row">
+      <div class="col-12 list">
+          <div class="card d-flex flex-row mb-3">
+              <div class="d-flex flex-grow-1 min-width-zero">
+                  <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                      <div class="mb-1 w-10 w-xs-100">Rank</div>
+
+                      <div class="w-30 w-xs-100">    
+                        Player
+                      </div>
+                      <p class="mb-1 text-white w-15 w-xs-100">SWAP</p>
+                      <p class="mb-1 text-white w-20 w-xs-100">24H Earnings (TRX)</p>              
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+  ${playersList.map((item) =>
+        `<div class="row">
+      <div class="col-12 list">
+          <div class="card d-flex flex-row mb-3">
+              <div class="d-flex flex-grow-1 min-width-zero">
+                  <div class="card-body align-self-center d-flex flex-column flex-md-row justify-content-between min-width-zero align-items-md-center">
+                      <div class="w-10 w-xs-100">
+                          ${item.rank}
+                      </div>
+                      <div class="w-30 w-xs-100">
+                      <a class="pt-1 pb-1 btn btn-outline-primary text-center list-item-heading mb-2 pr-5 pl-5" onclick="clipCopy('${item.player}')">
+                          ${shortId(item.player, 5)}
+                      </a>
+                      </div>
+                      <p class="mb-1 text-white w-15 w-xs-100">${formatSun(item.tronBalance)}</p>
+                      <p class="mb-1 text-white w-20 w-xs-100">${formatSun(item.earnings)}</p>  
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>`
+    ).join('')}`
+    $('#innerLeaderActivityContent').html(investTemplateHtml)
+    return { rank: rank, min: minimum }
+}
 
 async function loadTabsData() {
 
@@ -672,18 +779,26 @@ async function loadTabsData() {
         loadNewActivityData('onTrxPurchase', 'sellActivityContent')
     }
 
-    
+    let loadAdds = () => {
+        loadNewActivityData('onAddLiquidity', 'addActivityContent')
+    }
+
+    let loadRemoves = () => {
+        loadNewActivityData('onRemoveLiquidity', 'removeActivityContent')
+    }
 
     try {
-        await Promise.all([loadPumps(), loadDumps()])
+        await Promise.all([loadPumps(), loadDumps(), loadAdds(), loadRemoves()])
     } catch (e) {
         loadTabsData()
         return
     }
 
 
-    setInterval(loadPumps, 15000)
-    setInterval(loadDumps, 15000)
+    setInterval(loadPumps, 5000)
+    setInterval(loadDumps, 5000)
+    setInterval(loadAdds, 15000)
+    setInterval(loadRemoves, 15000)
 }
 
 const loadNewActivityData = async (activity, content) => {
@@ -734,7 +849,7 @@ const updateActivityUI = async (activity, tab, activityData) => {
                             TRX 
                         </div>
                         <div class="w-15 w-xs-100">    
-                            BNKRX 
+                            BNKR 
                         </div>         
                     </div>
                 </div>
@@ -1002,7 +1117,7 @@ const loadVolumeData = async (fingerprint, activity, startTime) => {
     let amount
 
     try {
-        res = await tronstack().getEventResult(contractAddress, requestObj)
+        res = await tronWeb.getEventResult(contractAddress, requestObj)
         fingerprint = res[res.length - 1].fingerprint
         _.each(res, (obj) => {
             let timestamp = obj.timestamp
@@ -1041,7 +1156,7 @@ async function loadPriceData(fingerprint = null, startTime) {
     let lastTime = 0
 
     try {
-        res = await tronstack().getEventResult(contractAddress, requestObj)
+        res = await tronWeb.getEventResult(contractAddress, requestObj)
 
         if (res.length) {
             fingerprint = res[res.length - 1].fingerprint
