@@ -2,7 +2,7 @@
 const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb' //'TS3CJptewhm9NM4gRLqPt2acxaD4gaER3K'
 
 const networks = { //TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
-    'mainnet': 'TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7',
+    'mainnet': 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC',
     'shasta': 'TNKK3sLSBikAwVVwnCr16LGZ4kw9dZcqVP'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
 
@@ -20,7 +20,7 @@ const feeLimit = 150e6
 const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
 // const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar' // test
 
-const bnkrAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C'
+const bnkrAddress = 'TGvTPauZdGvaiae8aNYqSYFEFxkBzGoFw4'
 
 let fastContract
 
@@ -68,7 +68,7 @@ async function main() {
 
 
         swapContract = await tronWeb.contract().at(contractAddress)
-        fastContract = await tronWeb.contract().at(fastAddress)
+        //fastContract = await tronWeb.contract().at(fastAddress)
         bnkr = await tronWeb.contract().at(bnkrAddress)
 
         console.log('found tronweb')

@@ -69270,7 +69270,7 @@ async function getBNKRPrice() {
 }
 
 async function getBNKRXPrice() {
-    let swap = await tronWeb.contract().at('TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7')
+    let swap = await tronWeb.contract().at('TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC')
     return (await swap.getTokenToTrxInputPrice(1e6).call()) / 1e6
 }
 

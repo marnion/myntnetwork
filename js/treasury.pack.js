@@ -18,16 +18,16 @@ GameHub - TNpvL6PddcnE1kPc8a7LcqNuYaocyMecux
 const feeLimit = 150e6
 const refreshInterval = 1000 * 60 * 5
 
-const tokenAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C'
-const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
-const swapAddress = 'TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7'
+const tokenAddress = 'TGvTPauZdGvaiae8aNYqSYFEFxkBzGoFw4'
+//const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
+const swapAddress = 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC'
 
 let fastContract
 
 var contractAddress
 var tronWeb
 var currentAddress
-var mintAddress = 'TPY3P5CNW4XdFzqrJEf5ehvfp9Pg2Bjjgz'
+var mintAddress = 'THS7kEwtJbzkJh4WBg9MkoB8QacZo6fTHx'
 var network
 var tronLinkUrlPrefix
 let credits, bnkrMint, bnkr, swap
