@@ -18,8 +18,10 @@ GameHub - TNpvL6PddcnE1kPc8a7LcqNuYaocyMecux
 const feeLimit = 150e6
 
 const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
-//const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar' //made for testing
+const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar'
 const myntAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C' //og bnkr address
+
+
 let fastContract
 
 var contractAddress
@@ -67,7 +69,7 @@ async function main() {
 
 
         swapContract = await tronWeb.contract().at(contractAddress)
-        //fastContract = await tronWeb.contract().at(fastAddress)
+        fastContract = await tronWeb.contract().at(fastAddress)
         mynt = await tronWeb.contract().at(myntAddress)
 
         console.log('found tronweb')
