@@ -1,7 +1,7 @@
 //410000000000000000000000000000000000000000
-const zeroAddress = 'TS3CJptewhm9NM4gRLqPt2acxaD4gaER3K'
+const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb'
 
-const networks = {//TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
+const networks = {
     'mainnet': 'TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7',
     'shasta': 'TNKK3sLSBikAwVVwnCr16LGZ4kw9dZcqVP'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
@@ -18,9 +18,7 @@ GameHub - TNpvL6PddcnE1kPc8a7LcqNuYaocyMecux
 const feeLimit = 150e6
 
 const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
-// const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar' // test
-const myntAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C' //og bnkr address
-
+const bnkrAddress = 'TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C'
 
 let fastContract
 
@@ -29,9 +27,9 @@ var tronWeb
 var currentAddress
 var network
 var tronLinkUrlPrefix
-let swapContract, myntMint, mynt
+let swapContract, bnkrMint, bnkr
 var waiting = 0
-let buyAmountInp, sellAmountInp, addAmountInp, removeAmountInp, buyEstimate, sellEstimate, addEstimate, removeEstimate, prices, USDTVolume
+let buyAmountInp, sellAmountInp, addAmountInp, removeAmountInp, buyEstimate, sellEstimate, addEstimate, removeEstimate, prices, trxVolume
 
 let volumeLoaded = false
 var players = {}
@@ -49,7 +47,6 @@ async function main() {
     if (!(window.tronWeb && window.tronWeb.ready)) {
         waiting += 1;
         if (waiting == 50) {
-            $(".landing-page").toggleClass("show-mobile-menu", false);
             $('#tronWebModal').modal()
             return
         }
@@ -70,7 +67,7 @@ async function main() {
 
         swapContract = await tronWeb.contract().at(contractAddress)
         fastContract = await tronWeb.contract().at(fastAddress)
-        mynt = await tronWeb.contract().at(myntAddress)
+        bnkr = await tronWeb.contract().at(bnkrAddress)
 
         console.log('found tronweb')
         currentAddress = tronWeb.defaultAddress['base58']
@@ -78,7 +75,7 @@ async function main() {
         userTag(currentAddress)
         console.log('current address', currentAddress)
 
-        USDTVolume = await getFastVolume()
+        trxVolume = await getFastVolume()
 
         //First UI render
         try {
@@ -104,7 +101,7 @@ async function main() {
 }
 
 async function getFastVolume() {
-    const response = await axios.get('https://mynt-info.bankroll.network/volume/x/sun')
+    const response = await axios.get('https://bnkr-info.bankroll.network/volume/x/sun')
     volumeLoaded = true
     return parseInt(response.data)
 }
@@ -132,18 +129,18 @@ function bindUI() {
     let calcTokens = async (e) => {
         let amount = Number.parseInt(buyAmountInp.val().trim())
         amount = tronWeb.toSun(amount)
-        amount = (await swapContract.getUSDTToTokenInputPrice(amount).call()).toNumber()
+        amount = (await swapContract.getTrxToTokenInputPrice(amount).call()).toNumber()
 
         console.log('buy-amount-estimate', amount)
-        buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} myntX`)
+        buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} BNKRX`)
     }
 
-    let calcUSDT = async (e) => {
+    let calcTRX = async (e) => {
         let amount = Number.parseInt(sellAmountInp.val().trim())
         amount = tronWeb.toSun(amount)
-        amount = (await swapContract.getTokenToUSDTInputPrice(amount).call()).toNumber()
+        amount = (await swapContract.getTokenToTrxInputPrice(amount).call()).toNumber()
         console.log('sell-amount-estimate', amount)
-        sellEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} USDT`)
+        sellEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} TRX`)
     }
 
     let calcSwap = async (e) => {
@@ -152,12 +149,12 @@ function bindUI() {
         if (supply > 0) {
             let amount = Number.parseInt(addAmountInp.val().trim())
             amount = tronWeb.toSun(amount)
-            amount = (await swapContract.getUSDTToLiquidityInputPrice(amount).call()).toNumber()
-            let myntAmount = (await swapContract.getLiquidityToReserveInputPrice(amount).call())[1].toNumber()
+            amount = (await swapContract.getTrxToLiquidityInputPrice(amount).call()).toNumber()
+            let bnkrAmount = (await swapContract.getLiquidityToReserveInputPrice(amount).call())[1].toNumber()
 
 
-            console.log('add-amount-estimate', amount, myntAmount)
-            addEstimate.text(`${formatSun(amount)} SWAP ; ${formatSun(myntAmount)} myntX required`)
+            console.log('add-amount-estimate', amount, bnkrAmount)
+            addEstimate.text(`${formatSun(amount)} SWAP ; ${formatSun(bnkrAmount)} BNKRX required`)
         }
     }
 
@@ -166,14 +163,14 @@ function bindUI() {
         amount = tronWeb.toSun(amount)
         amount = (await swapContract.getLiquidityToReserveInputPrice(amount).call())
         console.log('sell-amount-estimate', amount)
-        removeEstimate.text(`${numeral(tronWeb.fromSun(amount[0].toNumber())).format('0.000 a').toUpperCase()} USDT + ` + `${numeral(tronWeb.fromSun(amount[1].toNumber())).format('0.000 a').toUpperCase()} mynt`)
+        removeEstimate.text(`${numeral(tronWeb.fromSun(amount[0].toNumber())).format('0.000 a').toUpperCase()} TRX + ` + `${numeral(tronWeb.fromSun(amount[1].toNumber())).format('0.000 a').toUpperCase()} BNKR`)
     }
 
 
 
     buyAmountInp.on("change paste keyup", _.debounce(calcTokens, 250))
 
-    sellAmountInp.on("change paste keyup", _.debounce(calcUSDT, 250))
+    sellAmountInp.on("change paste keyup", _.debounce(calcTRX, 250))
 
     addAmountInp.on("change paste keyup", _.debounce(calcSwap, 250))
 
@@ -182,12 +179,12 @@ function bindUI() {
 }
 
 async function isSwapEnabled() {
-    let allowance = (await mynt.allowance(currentAddress, contractAddress).call()).toNumber();
+    let allowance = (await bnkr.allowance(currentAddress, contractAddress).call()).toNumber();
     return allowance > 21e12 ? true : false
 }
 
 function enableSwap() {
-    mynt.approve(contractAddress, 100e12).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
+    bnkr.approve(contractAddress, 100e12).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
         refresh(tx)
     }).catch(e => {
         txError(e)
@@ -195,7 +192,7 @@ function enableSwap() {
 }
 
 function disableSwap() {
-    mynt.approve(contractAddress, 0).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
+    bnkr.approve(contractAddress, 0).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
         refresh(tx)
     }).catch(e => {
         txError(e)
@@ -290,9 +287,9 @@ async function showWalletInfo() {
         $('#network').text(network)
         $('#walletAddress').text(`${shortId(currentAddress, 5)}`)
 
-        var bandwidth = await tronWeb.USDT.getBandwidth()
+        var bandwidth = await tronWeb.trx.getBandwidth()
         $('#getBandwidth').text(numeral(bandwidth).format('0,0 a').toUpperCase())
-        var result = await tronWeb.USDT.getAccountResources()
+        var result = await tronWeb.trx.getAccountResources()
         var net = result.EnergyLimit - result.EnergyUsed
         $('#getEnergy').text(numeral(net).format('0,0 a').toUpperCase())
         $('#walletBalanceValue').text(formatSun(await fastContract.balanceOf(currentAddress).call()))
@@ -311,7 +308,7 @@ async function showPrice(){
         while (!complete && retries < 5) {
             try {
                 retries++
-                price = (price) ? price : await swapContract.getTokenToUSDTInputPrice(1e6).call()
+                price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
                 complete = true
             } catch (e) {
                 console.warn('showstats fail', e.toString())
@@ -325,7 +322,7 @@ async function showPrice(){
 async function showStats() {
     try {
 
-        let totalTxs, players, USDTBalance, totalmynt, price, supply
+        let totalTxs, players, tronBalance, totalBNKR, price, supply
         let complete = false
         let retries = 0
 
@@ -334,9 +331,9 @@ async function showStats() {
                 retries++
                 totalTxs = (totalTxs) ? totalTxs : await swapContract.totalTxs().call()
                     players = (players) ? players : await swapContract.providers().call()
-                    USDTBalance = (USDTBalance) ? USDTBalance : await swapContract.USDTBalance().call()
-                    totalmynt = (totalmynt) ? totalmynt : await swapContract.tokenBalance().call()
-                    price = (price) ? price : await swapContract.getTokenToUSDTInputPrice(1e6).call()
+                    tronBalance = (tronBalance) ? tronBalance : await swapContract.tronBalance().call()
+                    totalBNKR = (totalBNKR) ? totalBNKR : await swapContract.tokenBalance().call()
+                    price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
                     supply = (supply) ? supply : await swapContract.totalSupply().call()
                 complete = true
             } catch (e) {
@@ -346,27 +343,27 @@ async function showStats() {
 
 
         if (volumeLoaded) {
-            $('#volume').text(formatSun(USDTVolume))
-            $('#volume-USDT').html(`${approxStr} ${formatSun(USDTVolume * prices.USDT)} USDT`)
-            $('#earnings').text(formatSun(USDTVolume * 0.003))
-            $('#earnings-USDT').html(`${approxStr} ${formatSun(USDTVolume * 0.003 * prices.USDT)} USDT`)
+            $('#volume').text(formatSun(trxVolume))
+            $('#volume-usdt').html(`${approxStr} ${formatSun(trxVolume * prices.usdt)} USDT`)
+            $('#earnings').text(formatSun(trxVolume * 0.003))
+            $('#earnings-usdt').html(`${approxStr} ${formatSun(trxVolume * 0.003 * prices.usdt)} USDT`)
         }
         $('#liquidity').text(formatSun(supply.toNumber()))
-        $('#liquidity-USDT').html(`${approxStr} ${formatSun(USDTBalance * prices.USDT + totalmynt.toNumber() * prices.myntx)} USDT`)
+        $('#liquidity-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt + totalBNKR.toNumber() * prices.bnkrx)} USDT`)
         $('#totalTxs').text(numeral(totalTxs.toNumber()).format('0,0.000 a').toUpperCase())
         $('#providers').text(players.toNumber())
-        $('#contractBalance').text(formatSun(USDTBalance))
-        $('#contractBalance-USDT').html(`${approxStr} ${formatSun(USDTBalance * prices.USDT)} USDT`)
+        $('#contractBalance').text(formatSun(tronBalance))
+        $('#contractBalance-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt)} USDT`)
         $('.buy-price').text(formatSun(price.toNumber()))
-        $('#price-USDT').html(`${approxStr} ${formatSun(price.toNumber() * prices.USDT)} USDT`)
-        $('#totalSupply').text(formatSun(totalmynt.toNumber()))
-        $('#totalSupply-USDT').html(`${approxStr} ${formatSun(totalmynt.toNumber() * prices.myntx)} USDT`)
+        $('#price-usdt').html(`${approxStr} ${formatSun(price.toNumber() * prices.usdt)} USDT`)
+        $('#totalSupply').text(formatSun(totalBNKR.toNumber()))
+        $('#totalSupply-usdt').html(`${approxStr} ${formatSun(totalBNKR.toNumber() * prices.bnkrx)} USDT`)
     } catch (e) { }
 }
 
 
 async function showUserStats() {
-    let userUSDT, usermynt, userSwap, supply, userTXs
+    let userTRX, userBNKR, userSwap, supply, userTXs
     let complete = false
     let retries = 0
 
@@ -374,8 +371,8 @@ async function showUserStats() {
         try {
             retries++
 
-            userUSDT = (userUSDT) ? userUSDT : await fastContract.balanceOf(currentAddress).call()
-            usermynt = (usermynt) ? usermynt : await mynt.balanceOf(currentAddress).call()
+            userTRX = (userTRX) ? userTRX : await fastContract.balanceOf(currentAddress).call()
+            userBNKR = (userBNKR) ? userBNKR : await bnkr.balanceOf(currentAddress).call()
             userSwap = (userSwap) ? userSwap : await swapContract.balanceOf(currentAddress).call()
             supply = (supply) ? supply : await swapContract.totalSupply().call()
             userTXs = (userTXs) ? userTXs : await swapContract.txs(currentAddress).call()
@@ -385,8 +382,8 @@ async function showUserStats() {
         }
     }
 
-    userUSDT = userUSDT.toNumber()
-    usermynt = usermynt.toNumber()
+    userTRX = userTRX.toNumber()
+    userBNKR = userBNKR.toNumber()
     userSwap = userSwap.toNumber()
     supply = supply.toNumber()
     userTXs = userTXs.toNumber()
@@ -397,23 +394,23 @@ async function showUserStats() {
     $('#swaping-status').text(isSwaping ? 'Swap enabled' : 'Swap disabled')
     $('#swapingChb').prop('checked', isSwaping)
     $('#user-txs').text(numeral(userTXs).format('0,0.000 a').toUpperCase())
-    $('.user-balance-mynt').text(formatSun(usermynt))
-    $('.user-balance-USDT').text(formatSun(userUSDT))
-    $('.user-balance-mynt-USDT').html(`${approxStr} ${formatSun(usermynt * prices.myntx)} USDT`)
-    $('.user-balance-USDT-USDT').html(`${approxStr} ${formatSun(userUSDT * prices.USDT)} USDT`)
+    $('.user-balance-bnkr').text(formatSun(userBNKR))
+    $('.user-balance-trx').text(formatSun(userTRX))
+    $('.user-balance-bnkr-usdt').html(`${approxStr} ${formatSun(userBNKR * prices.bnkrx)} USDT`)
+    $('.user-balance-trx-usdt').html(`${approxStr} ${formatSun(userTRX * prices.usdt)} USDT`)
     $('.user-balance-swap').text(formatSun(userSwap))
     if (userSwap > 0) {
-        let estimate = (userSwap / supply) * 0.003 * USDTVolume
-        $("#user-estimate").html(volumeLoaded ? `&#8776; ${formatSun(estimate)} USDT in 24H fees` : 'Loading volume data...')
-        $("#user-estimate-USDT").html(`${approxStr} ${formatSun(estimate * prices.USDT)} USDT`)
+        let estimate = (userSwap / supply) * 0.003 * trxVolume
+        $("#user-estimate").html(volumeLoaded ? `&#8776; ${formatSun(estimate)} TRX in 24H fees` : 'Loading volume data...')
+        $("#user-estimate-usdt").html(`${approxStr} ${formatSun(estimate * prices.usdt)} USDT`)
         $('#user-swap-percentage').text(numeral((userSwap / supply) * 100).format('0.000') + ' %')
         amount = (await swapContract.getLiquidityToReserveInputPrice(userSwap).call())
         console.log('sell-amount-estimate', amount)
-        let USDT_value = amount[0].toNumber()
-        $('#user-balance-estimate').html(`<h5 class="color-theme-1 mr-2">Staked Value</h5> <h5><span class="text-white">${formatSun(USDT_value)}</span> USDT + ` + `<span class="text-white">${formatSun(amount[1].toNumber())}</span> myntX = <span class="text-success">${formatSun(USDT_value * 2)}</span> USDT</h5>`)
-        $('#user-balance-estimate-USDT').html(`${approxStr} ${formatSun(USDT_value * 2 * prices.USDT)} USDT`)
+        let trx_value = amount[0].toNumber()
+        $('#user-balance-estimate').html(`<h5 class="color-theme-1 mr-2">Staked Value</h5> <h5><span class="text-white">${formatSun(trx_value)}</span> TRX + ` + `<span class="text-white">${formatSun(amount[1].toNumber())}</span> BNKRX = <span class="text-success">${formatSun(trx_value * 2)}</span> TRX</h5>`)
+        $('#user-balance-estimate-usdt').html(`${approxStr} ${formatSun(trx_value * 2 * prices.usdt)} USDT`)
     } else {
-        $("#user-estimate").html('Add USDT and mynt liquidity to earn 0.3%')
+        $("#user-estimate").html('Add TRX and BNKR liquidity to earn 0.3%')
         $('#user-balance-estimate').text('')
     }
 
@@ -480,15 +477,15 @@ async function sell() {
         return
     }
 
-    //let tokens = tronWeb.fromSun((await mynt.balanceOf(currentAddress).call()).toNumber())
+    //let tokens = tronWeb.fromSun((await bnkr.balanceOf(currentAddress).call()).toNumber())
     //let amount = $('#sellAmount').val().trim()
     var amount = Number.parseFloat($('#sellAmount').val().trim())
     if (amount <= 0 || !isFinite(amount) || amount === '') {
-        showAlert('Whoops', `Enter a valid amount of mynt`)
+        showAlert('Whoops', `Enter a valid amount of BNKR`)
         return
     } else {
 
-        let balance = await mynt.balanceOf(currentAddress).call()
+        let balance = await bnkr.balanceOf(currentAddress).call()
         amount = tronWeb.toBigNumber(amount * Math.pow(10, 6))
 
         //The solution to the decimals bug
@@ -498,7 +495,7 @@ async function sell() {
         let amount_hex = `0x${tronWeb.toBigNumber(amount).toString(16)}`
         console.log('selltokens', amount, amount_hex)
 
-        swapContract.tokenToUSDTSwapInput(amount_hex, 1).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
+        swapContract.tokenToTrxSwapInput(amount_hex, 1).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
             console.log('sell', amount, tx)
             refresh(tx)
         }).catch(e => {
@@ -521,7 +518,7 @@ async function buy() {
     //var amount = $('#buyAmount').val().trim()
     var amount = Number.parseFloat($('#buyAmount').val().trim())
     if (amount <= 0 || !isFinite(amount) || amount === '') {
-        showAlert('Whoops', `Enter a valid amount of USDT`)
+        showAlert('Whoops', `Enter a valid amount of TRX`)
         return
     } else {
 
@@ -537,7 +534,7 @@ async function buy() {
         console.log('buy tokens', amount, amount_hex)
 
 
-        swapContract.USDTToTokenSwapInput(1).send({ callValue: amount_hex, feeLimit: feeLimit }).then(tx => {
+        swapContract.trxToTokenSwapInput(1).send({ callValue: amount_hex, feeLimit: feeLimit }).then(tx => {
             console.log('buy', amount, tx)
             refresh(tx)
         }).catch(e => {
@@ -562,7 +559,7 @@ async function addLiquidity() {
 
     var amount = $('#addAmount').val().trim()
     if (amount <= 0 || !isFinite(amount) || amount === '') {
-        showAlert('Whoops', `Enter a valid amount of USDT`)
+        showAlert('Whoops', `Enter a valid amount of TRX`)
         return
     } else {
 
@@ -571,9 +568,9 @@ async function addLiquidity() {
         if (supply == 0) {
             balancedTokens = Math.floor(amount / 2.5)
         } else {
-            let tokens = (await mynt.balanceOf(currentAddress).call()).toNumber()
+            let tokens = (await bnkr.balanceOf(currentAddress).call()).toNumber()
 
-            let liquid_amount = (await swapContract.getUSDTToLiquidityInputPrice(amount).call()).toNumber()
+            let liquid_amount = (await swapContract.getTrxToLiquidityInputPrice(amount).call()).toNumber()
             balancedTokens = (await swapContract.getLiquidityToReserveInputPrice(liquid_amount).call())[1].toNumber()
             balancedTokens = Math.floor(Math.min(balancedTokens * 1.2, tokens))
         }
@@ -670,7 +667,7 @@ async function loadTabsData() {
     }
 
     let loadDumps = () => {
-        loadNewActivityData('onUSDTPurchase', 'sellActivityContent')
+        loadNewActivityData('onTrxPurchase', 'sellActivityContent')
     }
 
     
@@ -700,8 +697,8 @@ const loadNewActivityData = async (activity, content) => {
             delete obj.name
             if (obj.result) {
                 obj.player = (obj.result.buyer) ? tronWeb.address.fromHex(obj.result.buyer) : tronWeb.address.fromHex(obj.result.provider)
-                obj.mynt = parseFloat(obj.result.token_amount)
-                obj.tron = parseFloat(obj.result.USDT_amount)
+                obj.bnkr = parseFloat(obj.result.token_amount)
+                obj.tron = parseFloat(obj.result.trx_amount)
             }
 
             delete obj.result
@@ -732,10 +729,10 @@ const updateActivityUI = async (activity, tab, activityData) => {
                             Address
                         </div>
                         <div class="w-15 w-xs-100">    
-                            USDT 
+                            TRX 
                         </div>
                         <div class="w-15 w-xs-100">    
-                            myntX 
+                            BNKRX 
                         </div>         
                     </div>
                 </div>
@@ -751,8 +748,8 @@ const updateActivityUI = async (activity, tab, activityData) => {
                             <a class="p-1 btn btn-outline-primary list-item-heading mb-2 truncate w-20 w-xs-100" onclick="clipCopy('${item.player}')">
                             ${shortId(item.player, 5)}
                             </a>
-                            <div class="mb-1 text-white w-15 w-xs-100 ">${formatSun(item.USDT)}</div>
-                            <div class="mb-1 text-white w-15 w-xs-100 ">${formatSun(item.mynt)}</div>
+                            <div class="mb-1 text-white w-15 w-xs-100 ">${formatSun(item.tron)}</div>
+                            <div class="mb-1 text-white w-15 w-xs-100 ">${formatSun(item.bnkr)}</div>
                         </div>
                     </div>
                 </div>
@@ -819,7 +816,7 @@ async function initChart() {
                 if (label) {
                     label += ': ';
                 }
-                label = numeral(tooltipItem.yLabel).format('0.000 a').toUpperCase() + ' USDT' // parseFloat(tooltipItem.value).toFixed(2);
+                label = numeral(tooltipItem.yLabel).format('0.000 a').toUpperCase() + ' TRX' // parseFloat(tooltipItem.value).toFixed(2);
                 return label;
             }
         }
@@ -858,7 +855,7 @@ async function initChart() {
                     {
                         scaleLabel: {
                             display: true,
-                            labelString: 'USDT'
+                            labelString: 'TRX'
                         },
                         gridLines: {
                             display: true,
@@ -967,10 +964,10 @@ async function loadChartData() {
 
 async function updateVolume() {
 
-    USDTVolume = 1;
+    trxVolume = 1;
 
     try {
-        await Promise.all([loadVolume('onTokenPurchase'), loadVolume('onUSDTPurchase')])
+        await Promise.all([loadVolume('onTokenPurchase'), loadVolume('onTrxPurchase')])
     } catch (e) {
     }
 
@@ -1009,8 +1006,8 @@ const loadVolumeData = async (fingerprint, activity, startTime) => {
             let timestamp = obj.timestamp
             let time_length = `${obj.timestamp}`.length
             if (obj.timestamp > startTime) {
-                amount = parseInt(obj.result.USDT_amount)
-                USDTVolume += amount
+                amount = parseInt(obj.result.trx_amount)
+                trxVolume += amount
                 console.log(activity, 'volume counted', timestamp, timestamp - startTime, time_length, amount)
             } else {
                 console.log(activity, 'volume discounted', timestamp, timestamp - startTime, time_length, amount)
