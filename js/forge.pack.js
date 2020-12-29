@@ -1,8 +1,8 @@
 //410000000000000000000000000000000000000000
 const zeroAddress = 'TS3CJptewhm9NM4gRLqPt2acxaD4gaER3K'
 
-const networks = {
-    'mainnet': 'TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D',
+const networks = {//TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
+    'mainnet': 'TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7',
     'shasta': 'TNKK3sLSBikAwVVwnCr16LGZ4kw9dZcqVP'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
 
