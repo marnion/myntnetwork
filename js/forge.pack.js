@@ -18,8 +18,8 @@ GameHub - TNpvL6PddcnE1kPc8a7LcqNuYaocyMecux
 const feeLimit = 150e6
 
 const fastAddress = 'TNYMAeKiTPKDgeeAtD7hebneYYDUt9QdoY'
-const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar'
-
+//const myntAddress = 'TS87bnHCRDpqDYxRM4JuhTDDBDHDkfzdar' //made for testing
+const myntAddress = TKSLNVrDjb7xCiAySZvjXB9SxxVFieZA7C //og bnkr address
 let fastContract
 
 var contractAddress
