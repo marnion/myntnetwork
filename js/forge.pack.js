@@ -45,14 +45,6 @@ $(document).ready(async () => {
 })
 
 async function main() {
-
-	//https://api.shasta.trongrid.io
-	const HttpProvider = TronWeb.providers.HttpProvider;
-	const fullNode = new HttpProvider('https://api.shasta.trongrid.io');
-	const solidityNode = new HttpProvider('https://api.shasta.trongrid.io');
-	const eventServer = new HttpProvider('https://api.shasta.trongrid.io');
-
-	const tronWeb = new TronWeb(fullNode, solidityNode, eventServer);
 	
     if (!(window.tronWeb && window.tronWeb.ready)) {
         waiting += 1;
