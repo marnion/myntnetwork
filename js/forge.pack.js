@@ -131,7 +131,7 @@ function bindUI() {
     let calcTokens = async (e) => {
         let amount = Number.parseInt(buyAmountInp.val().trim())
         amount = tronWeb.toSun(amount)
-        amount = (await swapContract.getTrxToTokenInputPrice(amount).call()).toNumber()
+        amount = (await swapContract.getUsdtToTokenInputPrice(amount).call()).toNumber()
 
         console.log('buy-amount-estimate', amount)
         buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} BNKRX`)
