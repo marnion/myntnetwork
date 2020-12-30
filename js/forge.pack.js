@@ -3,7 +3,7 @@ const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb' //'TS3CJptewhm9NM4gRLqP
 
 const networks = { //TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
     'mainnet': 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC',
-    'shasta': 'TNKK3sLSBikAwVVwnCr16LGZ4kw9dZcqVP'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
+    'shasta': 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
 
 /*
@@ -46,6 +46,14 @@ $(document).ready(async () => {
 
 async function main() {
 
+	//https://api.shasta.trongrid.io
+	const HttpProvider = TronWeb.providers.HttpProvider;
+	const fullNode = new HttpProvider('https://api.shasta.trongrid.io');
+	const solidityNode = new HttpProvider('https://api.shasta.trongrid.io');
+	const eventServer = new HttpProvider('https://api.shasta.trongrid.io');
+
+	const tronWeb = new TronWeb(fullNode, solidityNode, eventServer);
+	
     if (!(window.tronWeb && window.tronWeb.ready)) {
         waiting += 1;
         if (waiting == 50) {
@@ -425,7 +433,7 @@ function cleanAddress(address) {
 }
 
 function setNetwork() {
-    var url = tronWeb.currentProvider().fullNode.host
+    var url = tronWeb.currentProvider()
     if (url.indexOf('shasta') != -1) {
         network = 'Shasta'
         contractAddress = networks['shasta']

@@ -48629,7 +48629,7 @@
                         return e.setExperimental(t.experimental), {
                             requires: "^2.2.4",
                             components: {
-                                usdt: {
+                                Usdt: {
                                     getTransactionsRelated: e.getTransactions
                                 }
                             }
@@ -69266,13 +69266,13 @@ function clipCopy(str) {
 }
 
 async function getBNKRPrice() {
-    let swap = await tronWeb.contract().at('usdtYvAoYvCqmvZWpFCTLc4rdQ7KxbLsUSj')
-    return (await swap.getTokenTousdtInputPrice(1e6).call()) / 1e6
+    let swap = await tronWeb.contract().at('UsdtYvAoYvCqmvZWpFCTLc4rdQ7KxbLsUSj')
+    return (await swap.getTokenToUsdtInputPrice(1e6).call()) / 1e6
 }
 
 async function getBNKRXPrice() {
-    let swap = await tronWeb.contract().at('TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D')
-    return (await swap.getTokenTousdtInputPrice(1e6).call()) / 1e6
+    let swap = await tronWeb.contract().at('TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC')
+    return (await swap.getTokenToUsdtInputPrice(1e6).call()) / 1e6
 }
 
 async function getBTTPrice() {
@@ -69286,7 +69286,7 @@ async function getBTTPrice() {
 
 async function getUSDTPrice() {
     try {
-        const response = await axios.get('https://bnkr-info.bankroll.network/price/usdt')
+        const response = await axios.get('https://bnkr-info.bankroll.network/price/Usdt')
         return response.data.price
     } catch (e) {
         return 1
@@ -69300,25 +69300,25 @@ async function getPrices() {
     let complete = false
     let retries = 0
 
-    let bnkr, btt, usdt, bnkrx
+    let bnkr, btt, Usdt, bnkrx
 
     while (!complete && retries < 5) {
         try {
             retries++
-            //bnkr = (bnkr) ? bnkr : await getBNKRPrice()
-            bnkrx = (bnkrx) ? bnkrx : await getBNKRXPrice()
-            btt = (btt) ? btt : await getBTTPrice()
-            usdt = (usdt) ? usdt : await getUSDTPrice()
+            bnkr = (bnkr) ? bnkr : await getBNKRPrice()
+            //bnkrx = (bnkrx) ? bnkrx : await getBNKRXPrice()
+            //btt = (btt) ? btt : await getBTTPrice()
+            //Usdt = (Usdt) ? Usdt : await getUSDTPrice()
             complete = true
         } catch (e) {
             console.warn('prices fail', e.toString())
         }
     }
 
-    //result.bnkr = bnkr / usdt;
-    result.bnkrx = bnkrx / usdt;
-    result.btt = btt / usdt;
-    result.usdt = 1 / usdt;
+    result.bnkr = bnkr / Usdt;
+    //result.bnkrx = bnkrx / Usdt;
+    //result.btt = btt / Usdt;
+    //result.Usdt = 1 / Usdt;
 
     return result;
 }
