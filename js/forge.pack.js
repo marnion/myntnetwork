@@ -492,7 +492,7 @@ async function sell() {
         let amount_hex = `0x${tronWeb.toBigNumber(amount).toString(16)}`
         console.log('selltokens', amount, amount_hex)
 
-        swapContract.tokenToTrxSwapInput(amount_hex, 1).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
+        swapContract.tokenToUsdtSwapInput(amount_hex, 1).send({ callValue: 0, feeLimit: feeLimit }).then(tx => {
             console.log('sell', amount, tx)
             refresh(tx)
         }).catch(e => {
