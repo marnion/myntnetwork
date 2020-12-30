@@ -85,7 +85,7 @@ async function main() {
         userTag(currentAddress)
         console.log('current address', currentAddress)
 
-        trxVolume = await getFastVolume()
+        //trxVolume = await getFastVolume()
 
         //First UI render
         try {

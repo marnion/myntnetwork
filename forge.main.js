@@ -69307,8 +69307,8 @@ async function getPrices() {
             retries++
             //bnkr = (bnkr) ? bnkr : await getBNKRPrice()
             bnkrx = (bnkrx) ? bnkrx : await getBNKRXPrice()
-            btt = (btt) ? btt : await getBTTPrice()
-            Usdt = (Usdt) ? Usdt : await getUSDTPrice()
+            //btt = (btt) ? btt : await getBTTPrice()
+            //Usdt = (Usdt) ? Usdt : await getUSDTPrice()
             complete = true
         } catch (e) {
             console.warn('prices fail', e.toString())
@@ -69317,8 +69317,8 @@ async function getPrices() {
 
     //result.bnkr = bnkr / Usdt;
     result.bnkrx = bnkrx / Usdt;
-    result.btt = btt / Usdt;
-    result.Usdt = 1 / Usdt;
+    //result.btt = btt / Usdt;
+    //result.Usdt = 1 / Usdt;
 
     return result;
 }
