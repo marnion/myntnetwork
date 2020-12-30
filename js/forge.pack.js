@@ -140,7 +140,7 @@ function bindUI() {
     let calcTRX = async (e) => {
         let amount = Number.parseInt(sellAmountInp.val().trim())
         amount = tronWeb.toSun(amount)
-        amount = (await swapContract.getTokenToTrxInputPrice(amount).call()).toNumber()
+        amount = (await swapContract.getTokenToUsdtInputPrice(amount).call()).toNumber()
         console.log('sell-amount-estimate', amount)
         sellEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} TRX`)
     }
@@ -335,7 +335,7 @@ async function showStats() {
                     players = (players) ? players : await swapContract.providers().call()
                     tronBalance = (tronBalance) ? tronBalance : await swapContract.tronBalance().call()
                     totalBNKR = (totalBNKR) ? totalBNKR : await swapContract.tokenBalance().call()
-                    price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
+                    price = (price) ? price : await swapContract.getTokenToUsdtInputPrice(1e6).call()
                     supply = (supply) ? supply : await swapContract.totalSupply().call()
                 complete = true
             } catch (e) {
