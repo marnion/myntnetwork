@@ -210,7 +210,7 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h3>Enter Amount in MYNTXX</h3>
+                                        <h3>Enter Amount in MYNTX</h3>
                                         <p>Please enter a valid integer amount,  the minimum is 10. Thanks! </p>
                                     </div>
                                     <div class="modal-footer text-center">
@@ -232,8 +232,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h3>Enter a valid MYNTXX Address</h3>
-                                        <p>Please check that MYNTXX address again. Thanks! </p>
+                                        <h3>Enter a valid MYNTX Address</h3>
+                                        <p>Please check that MYNTX address again. Thanks! </p>
                                     </div>
                                     <div class="modal-footer text-center">
                                         <button type="button" class="btn btn-outline-semi-light default"
@@ -255,8 +255,8 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <h3>Invalid MYNTXX Address Detected in Referral Link</h3>
-                                        <p>Please check that MYNTXX address again. Thanks! </p>
+                                        <h3>Invalid MYNTX Address Detected in Referral Link</h3>
+                                        <p>Please check that MYNTX address again. Thanks! </p>
                                     </div>
                                     <div class="modal-footer text-center">
                                         <button type="button" class="btn btn-outline-semi-light default"
@@ -449,11 +449,11 @@
                                 </div>
 
                                 <p class="col-12 white mb-3 text-justify">
-                                    MYNT Treasury is a long term way to profit from providing liquidity to the MYNTXX ecosystem. Passively earn USDT rewards over time by holding STCK.
+                                    MYNT Treasury is for all of our long-term investors. Users can passively earn USDT rewards over time by providing liquidity to the MYNTX ecosystem.
                                 </p>
                                 <p class="col-12 white mb-3">
                                     <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
-                                       onclick="reinvest();">ROLL</a>
+                                       onclick="reinvest();">REINVEST</a>
                                     <a class="btn btn-outline-semi-light btn-block default mb-0 mr-4"
                                        onclick="withdraw();">WITHDRAW</a>
                                 </p>
@@ -474,7 +474,7 @@
                                                     <label for="buyAmount">Amount</label>
                                                 </div>
                                                 <div class="col-6 text-right">
-                                                    Price <label class="buy-price text-white">0.0</label> <span class="text-small">USDT/MYNTXX</span>
+                                                    Price <label class="buy-price text-white">0.0</label> <span class="text-small">USDT/MYNTX</span>
                                                 </div>
                                             </div>
                                             <input type="number" class="form-control" id="buyAmount"
@@ -489,7 +489,7 @@
                                         </p>
                                         <div class="row">
                                             <div class="col-12 text-right">
-                                        <span class="text-small">* MYNTXX price influences STCK cost</span>
+                                        <span class="text-small">* MYNTX price influences STCK cost</span>
                                             </div>
                                         </div>
                                     </form>
@@ -551,8 +551,8 @@
 
                         <div class="container col-12 col-xl-6 col-lg-6 col-md-6">
                             <h2 class="text-white-50">About</h2>
-                            <p class="text-white">Treasury is used to passively earn rewards while providing locked liquidity. STCK is pegged 1:1 to MYNTXXSWAP, MYNTXX's native liquidity pool token. A transaction fee of 10% is charged on buys that is distributed as follows:
-                                4% of fees are payed instantly, 4% goes to a 2% daily drip, and 2% is permanently locked as liquidity.  Farm contributes 25% of mined MYNTXX to Treasury players via daily drip; an additional 25% is contributed to locked liquidity.</p>
+                            <p class="text-white">Treasury is a long-term way for users to earn rewards through providing liquidity. MYNT LP is given out at a 1:1 ratio to MYNTX, MYNTX's native liquidity pool token. A transaction fee of 10% is charged on buys that is distributed as follows:
+                                3% of fees are payed instantly, 2% goes to a 2% daily drip, and 5% is permanently locked as liquidity.</p>
                                 <p class="white">Contract<br><a id="contract-url" class="notranslate" target="_blank" href="#"></a></p>
                         </div>
                     </div>
@@ -561,7 +561,7 @@
                         <div class="container col-12 text-center">
                             <h1 class="text-white-50">Stats</h1>
                             <p>
-                                Treasury is the best way to earn USDT long term supporting the MYNT ecosystem! Here are the numbers...
+                                Treasury is the best way to earn USDT long term supporting the MYNTX ecosystem! See below.
                             </p>
                         </div>
 
@@ -597,7 +597,7 @@
                                 <i class="iconsmind-Basket-Coins large-icon"></i>
                                 <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Dividend Pool</h5>
                                 <p class="text-large mb-2 text-white"><span class="notranslate" id="dividendPool">0.0</span> / <span class="notranslate" id="lockedPool">0.0</span></p>
-                                <p class="text-muted text-small">STCK (DRIP / LOCKED)</p>
+                                <p class="text-muted text-small">MYNT LP (DRIP / LOCKED)</p>
                             </div>
                         </div>
 
@@ -606,7 +606,7 @@
                                 <i class="iconsmind-Coins large-icon"></i>
                                 <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Contract Balance</h5>
                                 <p class="text-large mb-2 text-white"><span class="notranslate" id="contractBalance">0.0</span></p>
-                                <p class="text-muted text-small">MYNTXXSWAP <span id="contractBalance-usdt"></span></p>
+                                <p class="text-muted text-small">MYNTX <span id="contractBalance-usdt"></span></p>
                             </div>
                         </div>
 
@@ -615,7 +615,7 @@
                                 <i class="iconsmind-Sync large-icon"></i>
                                 <h5 class="mb-0 font-weight-semibold color-theme-1 mb-4">Transactions</h5>
                                 <p class="text-large mb-2 text-white"><span class="notranslate" id="totalTxs">0.0</span></p>
-                                <p class="text-muted text-small">Txs</p>
+                                <p class="text-muted text-small">Transactions</p>
                             </div>
                         </div>
                     </div>
@@ -738,7 +738,7 @@
                                                 </div>
                                                 <div>
                                                     <p class="detail-text">
-                                                        You can buy STCK to participate in passive dividends provided by the MYNT Network. A transaction fee of 10% is charged in each direction
+                                                        You can buy MYNTX LP to participate in passive dividends provided by the MYNT Network. A transaction fee of 10% is charged in each direction
                                                     </p>
                                                 </div>
                                                 <p>&nbsp;</p>
@@ -754,8 +754,8 @@
                                                 </div>
                                                 <div>
                                                     <p class="detail-text">
-                                                        10% of every transaction in Treasury goes to rewards. 4% of fees are payed instantly, 4% goes to a daily drip, and 2% is permanently locked at liquidity.
-                                                        All drips rewards are paid out 2% daily.
+                                                        10% of every transaction in Treasury goes to rewards. 3% of fees are payed instantly, 2% goes to a daily drip, and 5% is permanently locked at liquidity.
+                                                        All drip rewards are paid out 2% daily.
                                                     </p>
                                                 </div>
                                                 <p>&nbsp;</p>
@@ -772,8 +772,8 @@
                                                 </div>
                                                 <div>
                                                     <p class="detail-text">
-                                                        Each STCK is pegged 1:1 to MYNTXXSWAP.  Players enjoy the highest dividend payouts on the TRON
-                                                        blockchain, NON-STOP. Treasury is powered by the entire MYNT Network.
+                                                        Each MYNTX LP is paid out 1:1 to MYNTX.  Players enjoy the highest dividend payouts on the TRON
+                                                        blockchain, 24/7. Treasury is the backbone of all contracts created on all of MYNT Network.
                                                     </p>
                                                 </div>
                                                 <p>&nbsp;</p>
@@ -790,8 +790,7 @@
                                                 </div>
                                                 <div>
                                                     <p class="detail-text">
-                                                        Treasury is designed to work well on both desktop and mobile. A
-                                                        sleek dark theme keeps you in the zone, WINNING
+                                                        Treasury is designed to be simple and easy. Lock some liquidity and earn!
                                                     </p>
                                                 </div>
                                                 <p>&nbsp;</p>
@@ -802,13 +801,12 @@
                                                 <div>
                                                     <i class="iconsmind-Gentleman large-icon"></i>
                                                     <h5 class="mb-0 font-weight-semibold">
-                                                        A Bankteller Production
+                                                        Mynt Network
                                                     </h5>
                                                 </div>
                                                 <div>
                                                     <p class="detail-text">
-                                                        Play to win and sleep well at night.
-                                                        As always, built with love.
+                                                        Participate in one of the most revolutionary decentralized finance investment solutions of this generation.
                                                     </p>
                                                 </div>
                                                 <p>&nbsp;</p>
