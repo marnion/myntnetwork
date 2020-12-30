@@ -31,7 +31,7 @@ var network
 var tronLinkUrlPrefix
 let swapContract, bnkrMint, bnkr
 var waiting = 0
-let buyAmountInp, sellAmountInp, addAmountInp, removeAmountInp, buyEstimate, sellEstimate, addEstimate, removeEstimate, prices, trxVolume
+let buyAmountInp, sellAmountInp, addAmountInp, removeAmountInp, buyEstimate, sellEstimate, addEstimate, removeEstimate, prices, usdtVolume
 
 let volumeLoaded = false
 var players = {}
@@ -77,7 +77,7 @@ async function main() {
         userTag(currentAddress)
         console.log('current address', currentAddress)
 
-        trxVolume = await getFastVolume()
+        usdtVolume = await getFastVolume()
 
         //First UI render
         try {
@@ -345,10 +345,10 @@ async function showStats() {
 
 
         if (volumeLoaded) {
-            $('#volume').text(formatSun(trxVolume))
-            $('#volume-usdt').html(`${approxStr} ${formatSun(trxVolume * prices.usdt)} USDT`)
-            $('#earnings').text(formatSun(trxVolume * 0.003))
-            $('#earnings-usdt').html(`${approxStr} ${formatSun(trxVolume * 0.003 * prices.usdt)} USDT`)
+            $('#volume').text(formatSun(usdtVolume))
+            $('#volume-usdt').html(`${approxStr} ${formatSun(usdtVolume * prices.usdt)} USDT`)
+            $('#earnings').text(formatSun(usdtVolume * 0.003))
+            $('#earnings-usdt').html(`${approxStr} ${formatSun(usdtVolume * 0.003 * prices.usdt)} USDT`)
         }
         $('#liquidity').text(formatSun(supply.toNumber()))
         $('#liquidity-usdt').html(`${approxStr} ${formatSun(tronBalance * prices.usdt + totalBNKR.toNumber() * prices.bnkrx)} USDT`)
@@ -402,7 +402,7 @@ async function showUserStats() {
     $('.user-balance-trx-usdt').html(`${approxStr} ${formatSun(userUSDT * prices.usdt)} USDT`)
     $('.user-balance-swap').text(formatSun(userSwap))
     if (userSwap > 0) {
-        let estimate = (userSwap / supply) * 0.003 * trxVolume
+        let estimate = (userSwap / supply) * 0.003 * usdtVolume
         $("#user-estimate").html(volumeLoaded ? `&#8776; ${formatSun(estimate)} TRX in 24H fees` : 'Loading volume data...')
         $("#user-estimate-usdt").html(`${approxStr} ${formatSun(estimate * prices.usdt)} USDT`)
         $('#user-swap-percentage').text(numeral((userSwap / supply) * 100).format('0.000') + ' %')
@@ -531,7 +531,7 @@ async function buy() {
         console.log('buy tokens', amount, amount_hex)
 
 
-        swapContract.trxToTokenSwapInput(1).send({ callValue: amount_hex, feeLimit: feeLimit }).then(tx => {
+        swapContract.usdtToTokenSwapInput(1).send({ callValue: amount_hex, feeLimit: feeLimit }).then(tx => {
             console.log('buy', amount, tx)
             refresh(tx)
         }).catch(e => {
@@ -961,7 +961,7 @@ async function loadChartData() {
 
 async function updateVolume() {
 
-    trxVolume = 1;
+    usdtVolume = 1;
 
     try {
         await Promise.all([loadVolume('onTokenPurchase'), loadVolume('onTrxPurchase')])
@@ -1004,7 +1004,7 @@ const loadVolumeData = async (fingerprint, activity, startTime) => {
             let time_length = `${obj.timestamp}`.length
             if (obj.timestamp > startTime) {
                 amount = parseInt(obj.result.trx_amount)
-                trxVolume += amount
+                usdtVolume += amount
                 console.log(activity, 'volume counted', timestamp, timestamp - startTime, time_length, amount)
             } else {
                 console.log(activity, 'volume discounted', timestamp, timestamp - startTime, time_length, amount)
