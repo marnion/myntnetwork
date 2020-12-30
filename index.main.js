@@ -69271,7 +69271,7 @@ async function getBNKRPrice() {
 }
 
 async function getBNKRXPrice() {
-    let swap = await tronWeb.contract().at('TB4S2pvyX8uQsBPrTDWYCuSDfYSg6tMJm7')
+    let swap = await tronWeb.contract().at('TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC')
     return (await swap.getTokenToTrxInputPrice(1e6).call()) / 1e6
 }
 
@@ -69305,7 +69305,7 @@ async function getPrices() {
     while (!complete && retries < 5) {
         try {
             retries++
-            bnkr = (bnkr) ? bnkr : await getBNKRPrice()
+            //bnkr = (bnkr) ? bnkr : await getBNKRPrice()
             bnkrx = (bnkrx) ? bnkrx : await getBNKRXPrice()
             btt = (btt) ? btt : await getBTTPrice()
             usdt = (usdt) ? usdt : await getUSDTPrice()
@@ -69315,7 +69315,7 @@ async function getPrices() {
         }
     }
 
-    result.bnkr = bnkr / usdt;
+    //result.bnkr = bnkr / usdt;
     result.bnkrx = bnkrx / usdt;
     result.btt = btt / usdt;
     result.usdt = 1 / usdt;
