@@ -294,7 +294,7 @@ async function showWalletInfo() {
         var result = await tronWeb.trx.getAccountResources()
         var net = result.EnergyLimit - result.EnergyUsed
         $('#getEnergy').text(numeral(net).format('0,0 a').toUpperCase())
-        $('#walletBalanceValue').text(formatSun(await fastContract.balanceOf(currentAddress).call()))
+        //$('#walletBalanceValue').text(formatSun(await fastContract.balanceOf(currentAddress).call()))
     } catch (e) {
         console.error(e)
     }
@@ -310,7 +310,7 @@ async function showPrice(){
         while (!complete && retries < 5) {
             try {
                 retries++
-                price = (price) ? price : await swapContract.getTokenToTrxInputPrice(1e6).call()
+                price = (price) ? price : await swapContract.getTokenToUsdtInputPrice(1e6).call()
                 complete = true
             } catch (e) {
                 console.warn('showstats fail', e.toString())
@@ -365,7 +365,7 @@ async function showStats() {
 
 
 async function showUserStats() {
-    let userTRX, userBNKR, userSwap, supply, userTXs
+    let userUSDT, userBNKR, userSwap, supply, userTXs
     let complete = false
     let retries = 0
 
@@ -373,7 +373,7 @@ async function showUserStats() {
         try {
             retries++
 
-            userTRX = (userTRX) ? userTRX : await fastContract.balanceOf(currentAddress).call()
+            //userUSDT = (userUSDT) ? userUSDT : await fastContract.balanceOf(currentAddress).call()
             userBNKR = (userBNKR) ? userBNKR : await bnkr.balanceOf(currentAddress).call()
             userSwap = (userSwap) ? userSwap : await swapContract.balanceOf(currentAddress).call()
             supply = (supply) ? supply : await swapContract.totalSupply().call()
@@ -384,7 +384,7 @@ async function showUserStats() {
         }
     }
 
-    userTRX = userTRX.toNumber()
+    //userUSDT = userUSDT.toNumber()
     userBNKR = userBNKR.toNumber()
     userSwap = userSwap.toNumber()
     supply = supply.toNumber()
@@ -397,9 +397,9 @@ async function showUserStats() {
     $('#swapingChb').prop('checked', isSwaping)
     $('#user-txs').text(numeral(userTXs).format('0,0.000 a').toUpperCase())
     $('.user-balance-bnkr').text(formatSun(userBNKR))
-    $('.user-balance-trx').text(formatSun(userTRX))
+    $('.user-balance-trx').text(formatSun(userUSDT))
     $('.user-balance-bnkr-usdt').html(`${approxStr} ${formatSun(userBNKR * prices.bnkrx)} USDT`)
-    $('.user-balance-trx-usdt').html(`${approxStr} ${formatSun(userTRX * prices.usdt)} USDT`)
+    $('.user-balance-trx-usdt').html(`${approxStr} ${formatSun(userUSDT * prices.usdt)} USDT`)
     $('.user-balance-swap').text(formatSun(userSwap))
     if (userSwap > 0) {
         let estimate = (userSwap / supply) * 0.003 * trxVolume
@@ -520,12 +520,12 @@ async function buy() {
     } else {
 
 
-        let balance = await fastContract.balanceOf(currentAddress).call()
+        //let balance = await fastContract.balanceOf(currentAddress).call()
         amount = tronWeb.toBigNumber(amount * Math.pow(10, 6))
 
         //The solution to the decimals bug
-        console.log(balance.toString(10), amount.toString(10), amount.gt(balance))
-        amount = (amount.gt(balance)) ? balance : amount
+        //console.log(balance.toString(10), amount.toString(10), amount.gt(balance))
+        //amount = (amount.gt(balance)) ? balance : amount
 
         let amount_hex = `0x${tronWeb.toBigNumber(amount).toString(16)}`
         console.log('buy tokens', amount, amount_hex)
