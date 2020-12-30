@@ -426,15 +426,10 @@ function cleanAddress(address) {
 
 function setNetwork() {
     var url = tronWeb.currentProvider()
-    if (url.indexOf('shasta') != -1) {
+	console.log(url)
         network = 'Shasta'
         contractAddress = networks['shasta']
         tronLinkUrlPrefix = 'https://shasta.tronscan.org/#/transaction/'
-    } else {
-        network = 'Mainnet'
-        contractAddress = networks['mainnet']
-        tronLinkUrlPrefix = 'https://tronscan.org/#/transaction/'
-    }
 
     console.log('network detected', network, contractAddress)
 }
