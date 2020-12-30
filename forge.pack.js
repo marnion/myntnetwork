@@ -67,7 +67,7 @@ async function main() {
 
         tronWeb = window.tronWeb
 
-        setNetwork()
+        await loginTrc()
         updateReferrer()
         bindUI()
 
@@ -110,6 +110,49 @@ async function main() {
 
 }
 
+async function loginTrc(){
+	const loginPromise = new Promise((resolve, reject) => {
+		if (window.tronWeb && window.tronWeb.ready) {
+			resolve(true)
+		} else {
+			window.addEventListener('load', () => {
+				let tbAcc = setInterval(() => {
+					if (window.tronWeb && window.tronWeb.ready) resolve(true)
+					clearInterval(tbAcc)
+				}, 200)
+
+				setTimeout(() => {
+					clearInterval(tbAcc)
+				}, 10000)
+			})
+		}
+	})
+	.then(() => {
+		console.log("Tronweb installed and logged in")
+		return true
+	})
+	.catch((err) => {
+		console.error('Error while detecting tronweb', err)
+		return false
+	})
+	loginPromise.then((result) => {
+		return new Promise((resolve, reject) => {
+			const userAddress = window.tronWeb.defaultAddress.base58
+			if (!userAddress) return resolve(false)
+
+			trcUserAddress = userAddress
+			$('.trc-address')[0].innerHTML = "Showing total staked and divs earned for: <br>" + trcUserAddress
+
+			window.addEventListener('load', (event) => {})
+
+			setInterval(() => {
+				if (window.tronWeb && trcUserAddress !== window.tronWeb.defaultAddress.base58) location.reload()
+			}, 700)
+		})
+	})
+}
+
+
 async function getFastVolume() {
     const response = await axios.get('https://bnkr-info.bankroll.network/volume/x/sun')
     volumeLoaded = true
@@ -139,7 +182,7 @@ function bindUI() {
     let calcTokens = async (e) => {
         let amount = Number.parseInt(buyAmountInp.val().trim())
         amount = tronWeb.toSun(amount)
-        amount = (await swapContract.getTrxToTokenInputPrice(amount).call()).toNumber()
+        amount = (await swapContract.getUsdtToTokenInputPrice(amount).call()).toNumber()
 
         console.log('buy-amount-estimate', amount)
         buyEstimate.text(`${numeral(tronWeb.fromSun(amount)).format('0.000 a').toUpperCase()} BNKRX`)
