@@ -3,7 +3,7 @@ const zeroAddress = 'T9yD14Nj9j7xAB4dbGeiX9h8unkKHxuWwb' //'TS3CJptewhm9NM4gRLqP
 
 const networks = { //TG8qehVpZb9AEQkeXTnMrs3odFJMNoGz8D test
     'mainnet': 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC',
-    'shasta': 'TJxSMuTUNr8EyMu1gGnBSaR4JkxFFjYFPC'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
+    'shasta': 'TCgFWzTbHjwBMGgQmviQDFBrYBiyjGeoqb'//'TNVYQKhigG7YfJqV6jMkPWnDBYtQceFszH'
 }
 
 /*
